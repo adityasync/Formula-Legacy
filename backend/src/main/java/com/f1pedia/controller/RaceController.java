@@ -27,7 +27,7 @@ public class RaceController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Race> getRaceById(@PathVariable Integer id) {
+    public ResponseEntity<Race> getRaceById(@PathVariable int id) {
         return raceRepository.findById(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());

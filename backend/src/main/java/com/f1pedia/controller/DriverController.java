@@ -1,16 +1,11 @@
-package com.f1pedia.controller;
-
 import com.f1pedia.domain.Driver;
 import com.f1pedia.repository.DriverRepository;
-import com.f1pedia.repository.ResultRepository;
-import com.f1pedia.domain.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/drivers")
@@ -21,9 +16,6 @@ public class DriverController {
     private DriverRepository driverRepository;
 
     @Autowired
-    private ResultRepository resultRepository;
-
-    @Autowired
     private JdbcTemplate jdbcTemplate;
 
     @GetMapping
@@ -32,7 +24,7 @@ public class DriverController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Driver> getDriverById(@PathVariable Integer id) {
+    public ResponseEntity<Driver> getDriverById(@PathVariable int id) {
         return driverRepository.findById(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
@@ -42,7 +34,7 @@ public class DriverController {
      * Full driver career stats
      */
     @GetMapping("/{id}/career")
-    public ResponseEntity<Map<String, Object>> getDriverCareer(@PathVariable Integer id) {
+    public ResponseEntity<Map<String, Object>> getDriverCareer(@PathVariable int id) {
         Optional<Driver> driverOpt = driverRepository.findById(id);
         if (driverOpt.isEmpty()) {
             return ResponseEntity.notFound().build();

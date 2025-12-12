@@ -22,7 +22,7 @@ public class ConstructorController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Constructor> getConstructorById(@PathVariable Integer id) {
+    public ResponseEntity<Constructor> getConstructorById(@PathVariable int id) {
         return constructorRepository.findById(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
