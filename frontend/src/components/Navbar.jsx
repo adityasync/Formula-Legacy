@@ -1,5 +1,5 @@
 import { Link, useLocation } from 'react-router-dom';
-import { Trophy, Timer, Users, TrendingUp } from 'lucide-react';
+import { Trophy, Timer, Users, TrendingUp, MapPin } from 'lucide-react';
 
 export default function Navbar() {
     const location = useLocation();
@@ -11,9 +11,8 @@ export default function Navbar() {
 
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex items-center justify-between h-16">
-                    {/* Logo with racing accent */}
+                    {/* Logo with checkered flag */}
                     <Link to="/" className="flex items-center gap-3 group">
-                        {/* Checkered flag icon */}
                         <div className="w-8 h-8 grid grid-cols-2 grid-rows-2 rounded overflow-hidden">
                             <div className="bg-white"></div>
                             <div className="bg-f1-red"></div>
@@ -27,21 +26,15 @@ export default function Navbar() {
 
                     {/* Navigation */}
                     <div className="hidden md:flex items-center">
-                        <NavLink to="/drivers" icon={<Users size={16} />} text="Drivers" active={location.pathname === '/drivers'} />
+                        <NavLink to="/drivers" icon={<Users size={16} />} text="Drivers" active={location.pathname.startsWith('/drivers')} />
                         <NavLink to="/teams" icon={<Trophy size={16} />} text="Teams" active={location.pathname.startsWith('/teams')} />
+                        <NavLink to="/circuits" icon={<MapPin size={16} />} text="Circuits" active={location.pathname.startsWith('/circuits')} />
                         <NavLink to="/races" icon={<Timer size={16} />} text="Races" active={location.pathname === '/races'} />
                         <NavLink to="/analytics" icon={<TrendingUp size={16} />} text="Analytics" active={location.pathname === '/analytics'} />
-                    </div>
-
-                    {/* Racing badge */}
-                    <div className="hidden lg:flex items-center gap-2 text-gray-500 font-mono text-xs">
-                        <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
-                        LIVE DATA
                     </div>
                 </div>
             </div>
 
-            {/* Bottom accent line */}
             <div className="h-px bg-gradient-to-r from-transparent via-f1-red to-transparent"></div>
         </nav>
     );

@@ -5,7 +5,10 @@ import Races from './pages/Races';
 import Navbar from './components/Navbar';
 import Home from './pages/Home';
 import Drivers from './pages/Drivers';
+import DriverProfile from './pages/DriverProfile';
 import Analytics from './pages/Analytics';
+import Circuits from './pages/Circuits';
+import CircuitDetails from './pages/CircuitDetails';
 
 function App() {
   return (
@@ -15,8 +18,11 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/drivers" element={<Drivers />} />
+          <Route path="/drivers/:id" element={<DriverProfile />} />
           <Route path="/teams" element={<Teams />} />
           <Route path="/teams/:id" element={<TeamDetails />} />
+          <Route path="/circuits" element={<Circuits />} />
+          <Route path="/circuits/:id" element={<CircuitDetails />} />
           <Route path="/races" element={<Races />} />
           <Route path="/analytics" element={<Analytics />} />
         </Routes>
