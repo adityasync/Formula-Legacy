@@ -1,0 +1,16 @@
+version: '3.8'
+
+services:
+  # DB is now running locally on the host machine to save memory.
+  # Use standard port 5432.
+
+  # Backend service will be added here later
+  # backend:
+  #   build: ./backend
+  #   environment:
+  #     - SPRING_DATASOURCE_URL=jdbc:postgresql://host.docker.internal:5432/f1pedia
+  #   ...
+
+networks:
+  f1-network:
+    driver: bridge
