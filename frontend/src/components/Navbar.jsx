@@ -7,7 +7,13 @@ import { sfx } from '../utils/audio';
 export default function Navbar() {
     const location = useLocation();
     const isHome = location.pathname === '/';
-    const [scrolled, setScrolled] = useState(false);
+    const [isOpen, setIsOpen] = useState(false);
+    const { pathname } = useLocation(); // Replaces location
+
+    // Close menu on route change
+    useEffect(() => {
+        setIsOpen(false);
+    }, [pathname]);
 
     useEffect(() => {
         const handleScroll = () => {
@@ -17,9 +23,18 @@ export default function Navbar() {
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
 
+    // Toggle scroll lock when menu is open
+    useEffect(() => {
+        if (isOpen) {
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = 'unset';
+        }
+    }, [isOpen]);
+
     return (
         <motion.nav
-            className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isHome && !scrolled
+            className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isHome && !scrolled && !isOpen
                 ? 'bg-transparent'
                 : 'bg-black/95 backdrop-blur-sm'
                 }`}
@@ -27,14 +42,14 @@ export default function Navbar() {
             animate={{ y: 0 }}
             transition={{ duration: 0.5 }}
         >
-            {/* Racing stripe top - show when scrolled or not on home */}
+            {/* Racing stripe top */}
             <div className={`h-1 bg-gradient-to-r from-f1-red via-orange-500 to-f1-red transition-opacity duration-300 ${isHome && !scrolled ? 'opacity-0' : 'opacity-100'
                 }`}></div>
 
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex items-center justify-between h-16">
-                    {/* Logo only - no text */}
-                    <Link to="/" className="flex items-center group">
+                    {/* Logo only */}
+                    <Link to="/" className="flex items-center group z-50 relative">
                         <img
                             src="/logo.png"
                             alt="F1PEDIA"
@@ -42,20 +57,65 @@ export default function Navbar() {
                         />
                     </Link>
 
-                    {/* Navigation */}
+                    {/* Desktop Navigation */}
                     <div className="hidden md:flex items-center gap-1">
-                        <NavLink to="/drivers" icon={<Users size={16} />} text="Drivers" active={location.pathname.startsWith('/drivers')} />
-                        <NavLink to="/teams" icon={<Trophy size={16} />} text="Teams" active={location.pathname.startsWith('/teams')} />
-                        <NavLink to="/circuits" icon={<MapPin size={16} />} text="Circuits" active={location.pathname.startsWith('/circuits')} />
-                        <NavLink to="/races" icon={<Timer size={16} />} text="Races" active={location.pathname === '/races'} />
-                        <NavLink to="/analytics" icon={<TrendingUp size={16} />} text="Analytics" active={location.pathname === '/analytics'} />
+                        <NavLink to="/drivers" icon={<Users size={16} />} text="Drivers" active={pathname.startsWith('/drivers')} />
+                        <NavLink to="/teams" icon={<Trophy size={16} />} text="Teams" active={pathname.startsWith('/teams')} />
+                        <NavLink to="/circuits" icon={<MapPin size={16} />} text="Circuits" active={pathname.startsWith('/circuits')} />
+                        <NavLink to="/races" icon={<Timer size={16} />} text="Races" active={pathname === '/races'} />
+                        <NavLink to="/analytics" icon={<TrendingUp size={16} />} text="Analytics" active={pathname === '/analytics'} />
                     </div>
+
+                    {/* Mobile Menu Button */}
+                    <button
+                        onClick={() => setIsOpen(!isOpen)}
+                        className="md:hidden z-50 p-2 text-white hover:text-f1-red transition-colors"
+                    >
+                        <div className="flex flex-col gap-1.5 w-6">
+                            <motion.div
+                                animate={isOpen ? { rotate: 45, y: 8 } : { rotate: 0, y: 0 }}
+                                className="h-0.5 w-full bg-current origin-center"
+                            />
+                            <motion.div
+                                animate={isOpen ? { opacity: 0 } : { opacity: 1 }}
+                                className="h-0.5 w-full bg-current"
+                            />
+                            <motion.div
+                                animate={isOpen ? { rotate: -45, y: -8 } : { rotate: 0, y: 0 }}
+                                className="h-0.5 w-full bg-current origin-center"
+                            />
+                        </div>
+                    </button>
                 </div>
             </div>
+
+            {/* Mobile Menu Overlay */}
+            <motion.div
+                className={`fixed inset-0 bg-black pt-20 px-6 md:hidden ${isOpen ? 'pointer-events-auto' : 'pointer-events-none'}`}
+                initial={{ opacity: 0, x: '100%' }}
+                animate={isOpen ? { opacity: 1, x: 0 } : { opacity: 0, x: '100%' }}
+                transition={{ type: "spring", damping: 20 }}
+            >
+                <div className="flex flex-col gap-6 text-2xl font-racing uppercase tracking-wider">
+                    <MobileLink to="/drivers" onClick={() => setIsOpen(false)} text="Drivers" />
+                    <MobileLink to="/teams" onClick={() => setIsOpen(false)} text="Teams" />
+                    <MobileLink to="/circuits" onClick={() => setIsOpen(false)} text="Circuits" />
+                    <MobileLink to="/races" onClick={() => setIsOpen(false)} text="Races" />
+                    <MobileLink to="/analytics" onClick={() => setIsOpen(false)} text="Analytics" />
+                </div>
+            </motion.div>
 
             <div className={`h-px bg-gradient-to-r from-transparent via-gray-800 to-transparent transition-opacity duration-300 ${isHome && !scrolled ? 'opacity-0' : 'opacity-100'
                 }`}></div>
         </motion.nav>
+    );
+}
+
+function MobileLink({ to, onClick, text }) {
+    return (
+        <Link to={to} onClick={onClick} className="block py-4 border-b border-gray-800 text-gray-400 hover:text-white hover:text-f1-red transition-colors">
+            {text}
+        </Link>
     );
 }
 
@@ -64,7 +124,7 @@ function NavLink({ to, icon, text, active }) {
         <Link to={to} onClick={() => sfx.gearShift()} onMouseEnter={() => sfx.hover()}>
             <motion.div
                 className={`relative flex items-center gap-2 px-4 py-2 text-sm font-racing uppercase tracking-wider transition-all
-                    ${active
+                ${active
                         ? 'text-white'
                         : 'text-gray-400 hover:text-white'
                     }`}

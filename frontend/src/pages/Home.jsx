@@ -56,8 +56,9 @@ export default function Home() {
                             transition={{ delay: 1.2 }}
                             className="flex items-center justify-center gap-4"
                         >
-                            <img src="/logo.png" alt="F1PEDIA" className="h-16 w-auto" />
-                            <span className="text-6xl font-racing text-f1-red">PEDIA</span>
+                            <span className="text-6xl font-racing text-white">
+                                F1<span className="text-f1-red">PEDIA</span>
+                            </span>
                         </motion.div>
                     </motion.div>
                 )}
@@ -114,14 +115,13 @@ export default function Home() {
 
                     <div className="overflow-hidden mb-6">
                         <motion.div
-                            className="flex items-center justify-center gap-6"
+                            className="flex items-center justify-center gap-4"
                             initial={{ y: 300 }}
                             animate={loaded ? { y: 0 } : {}}
                             transition={{ duration: 1, ease: [0.25, 0.1, 0, 1], delay: 0.5 }}
                         >
-                            <img src="/logo.png" alt="F1PEDIA" className="h-32 md:h-48 w-auto" />
-                            <h1 className="text-[10rem] md:text-[14rem] font-racing leading-none tracking-tighter text-f1-red">
-                                PEDIA
+                            <h1 className="text-[8rem] md:text-[12rem] font-racing leading-none tracking-tighter text-white">
+                                F1<span className="text-f1-red">PEDIA</span>
                             </h1>
                         </motion.div>
                     </div>
