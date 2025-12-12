@@ -53,19 +53,21 @@ export default function Teams() {
 
                     {/* Title with racing accent */}
                     <motion.div
-                        className="flex items-center gap-4"
+                        className="flex flex-col md:flex-row md:items-end justify-between gap-6"
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.1 }}
                     >
-                        <div className="w-2 h-16 bg-f1-red"></div>
-                        <div>
-                            <h1 className="text-5xl md:text-6xl text-white font-racing tracking-tight uppercase">
-                                Constructor <span className="text-f1-red">Archive</span>
-                            </h1>
-                            <p className="text-gray-500 font-mono text-sm mt-2">
-                                {teams.length} teams throughout F1 history
-                            </p>
+                        <div className="flex items-center gap-4">
+                            <div className="w-2 h-16 bg-f1-red"></div>
+                            <div>
+                                <h1 className="text-5xl md:text-6xl text-white font-racing tracking-tight uppercase">
+                                    Constructor <span className="text-f1-red">Archive</span>
+                                </h1>
+                                <p className="text-gray-500 font-mono text-sm mt-2">
+                                    {teams.length} teams throughout F1 history
+                                </p>
+                            </div>
                         </div>
                     </motion.div>
                 </div>

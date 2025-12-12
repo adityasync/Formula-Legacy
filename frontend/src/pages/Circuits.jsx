@@ -51,19 +51,21 @@ export default function Circuits() {
                     </motion.div>
 
                     <motion.div
-                        className="flex items-center gap-4"
+                        className="flex flex-col md:flex-row md:items-end justify-between gap-6"
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.1 }}
                     >
-                        <div className="w-2 h-16 bg-f1-red"></div>
-                        <div>
-                            <h1 className="text-5xl md:text-6xl text-white font-racing tracking-tight uppercase">
-                                Circuit <span className="text-f1-red">Archive</span>
-                            </h1>
-                            <p className="text-gray-500 font-mono text-sm mt-2">
-                                {circuits.length} circuits across {Object.keys(byCountry).length} countries
-                            </p>
+                        <div className="flex items-center gap-4">
+                            <div className="w-2 h-16 bg-f1-red"></div>
+                            <div>
+                                <h1 className="text-5xl md:text-6xl text-white font-racing tracking-tight uppercase">
+                                    Circuit <span className="text-f1-red">Archive</span>
+                                </h1>
+                                <p className="text-gray-500 font-mono text-sm mt-2">
+                                    {circuits.length} circuits across {Object.keys(byCountry).length} countries
+                                </p>
+                            </div>
                         </div>
                     </motion.div>
                 </div>
@@ -71,7 +73,7 @@ export default function Circuits() {
 
             {/* Content */}
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     {circuits.map((circuit, i) => (
                         <motion.div
                             key={circuit.circuit_id}

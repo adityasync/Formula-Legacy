@@ -100,9 +100,9 @@ export default function Races() {
                                 initial={{ opacity: 0, x: -20 }}
                                 animate={{ opacity: 1, x: 0 }}
                                 transition={{ delay: index * 0.03 }}
-                                className="group bg-gray-900 border border-gray-800 hover:border-f1-red p-4 transition-all flex flex-col md:flex-row items-start md:items-center justify-between"
+                                className="group bg-gray-900 border border-gray-800 hover:border-f1-red p-4 transition-all flex flex-col items-start gap-4 md:flex-row md:items-center md:justify-between"
                             >
-                                <div className="flex items-center gap-5">
+                                <div className="flex items-center gap-5 w-full md:w-auto">
                                     {/* Round number with racing badge */}
                                     <div className="w-16 h-16 bg-f1-red flex flex-col items-center justify-center flex-shrink-0">
                                         <span className="text-xs text-white/70 font-mono">R</span>
