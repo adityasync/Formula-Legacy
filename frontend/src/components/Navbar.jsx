@@ -7,6 +7,7 @@ import { sfx } from '../utils/audio';
 export default function Navbar() {
     const location = useLocation();
     const isHome = location.pathname === '/';
+    const [scrolled, setScrolled] = useState(false);
     const [isOpen, setIsOpen] = useState(false);
     const { pathname } = useLocation(); // Replaces location
 
