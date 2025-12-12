@@ -1,15 +1,54 @@
-version: '3.8'
-
 services:
-  # DB is now running locally on the host machine to save memory.
-  # Use standard port 5432.
+  # PostgreSQL Database
+  postgres:
+    image: postgres:16-alpine
+    container_name: f1pedia-db
+    environment:
+      POSTGRES_DB: f1pedia
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - f1-network
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U postgres" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
-  # Backend service will be added here later
-  # backend:
-  #   build: ./backend
-  #   environment:
-  #     - SPRING_DATASOURCE_URL=jdbc:postgresql://host.docker.internal:5432/f1pedia
-  #   ...
+  # Spring Boot Backend
+  backend:
+    build: ./backend
+    container_name: f1pedia-backend
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/f1pedia
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: postgres
+    ports:
+      - "8080:8080"
+    networks:
+      - f1-network
+
+  # React Frontend (production build)
+  frontend:
+    build: ./frontend
+    container_name: f1pedia-frontend
+    depends_on:
+      - backend
+    ports:
+      - "5173:80"
+    networks:
+      - f1-network
+
+volumes:
+  postgres_data:
+
 
 networks:
   f1-network:
