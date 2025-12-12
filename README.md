@@ -224,20 +224,7 @@ npm run dev
 
 ---
 
-## 🎯 Roadmap
 
-| Milestone | Status | Description |
-|-----------|--------|-------------|
-| **0** | ✅ Complete | Project Setup & Repository Structure |
-| **1** | ✅ Complete | Database Schema & ETL Pipeline |
-| **2** | ✅ Complete | Spring Boot Backend (REST API) |
-| **3** | ✅ Complete | React Frontend (Core Pages) |
-| **4** | ✅ Complete | Media Layer (8-bit Portraits + Racing SFX) |
-| **5** | ✅ Complete | Advanced Analytics Dashboard |
-| **6** | ✅ Complete | ML Predictions (Race outcomes) |
-| **7** | ✅ Complete | CI/CD & Documentation |
-
----
 
 ## 🔌 API Endpoints
 
