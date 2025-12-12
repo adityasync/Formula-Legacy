@@ -5,6 +5,7 @@ import Races from './pages/Races';
 import Navbar from './components/Navbar';
 import Home from './pages/Home';
 import Drivers from './pages/Drivers';
+import Analytics from './pages/Analytics';
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
           <Route path="/teams" element={<Teams />} />
           <Route path="/teams/:id" element={<TeamDetails />} />
           <Route path="/races" element={<Races />} />
+          <Route path="/analytics" element={<Analytics />} />
         </Routes>
       </div>
     </Router>

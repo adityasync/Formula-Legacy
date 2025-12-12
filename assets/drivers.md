@@ -23,28 +23,28 @@ Style: **Face only (no helmet)**, Trading Card, 8-bit.
 | **Kimi Räikkönen** | 21 | [x] | `assets/kimi_raikkonen_8bit.png` |
 | **Mika Häkkinen** | 20 | [x] | `assets/mika_hakkinen_8bit.png` |
 | **Stirling Moss** | 16 | [x] | `assets/stirling_moss_8bit.png` |
-| **Jenson Button** | 15 | [ ] |  |
-| **Jack Brabham** | 14 | [ ] |  |
-| **Emerson Fittipaldi** | 14 | [ ] |  |
-| **Graham Hill** | 14 | [ ] |  |
-| **Alberto Ascari** | 13 | [ ] |  |
-| **David Coulthard** | 13 | [ ] |  |
-| **Mario Andretti** | 12 | [ ] |  |
-| **Alan Jones** | 12 | [ ] |  |
-| **Carlos Reutemann** | 12 | [ ] |  |
-| **Rubens Barrichello** | 11 | [ ] |  |
-| **Felipe Massa** | 11 | [ ] |  |
-| **Jacques Villeneuve** | 11 | [ ] |  |
-| **Gerhard Berger** | 10 | [ ] |  |
-| **Valtteri Bottas** | 10 | [ ] |  |
-| **James Hunt** | 10 | [ ] |  |
-| **Ronnie Peterson** | 10 | [ ] |  |
+| **Jenson Button** | 15 | [x] | `assets/jenson_button_8bit.png` |
+| **Jack Brabham** | 14 | [x] | `assets/jack_brabham_8bit.png` |
+| **Emerson Fittipaldi** | 14 | [x] | `assets/emerson_fittipaldi_8bit.png` |
+| **Graham Hill** | 14 | [x] | `assets/graham_hill_8bit.png` |
+| **Alberto Ascari** | 13 | [x] | `assets/alberto_ascari_8bit.png` |
+| **David Coulthard** | 13 | [x] | `assets/david_coulthard_8bit.png` |
+| **Mario Andretti** | 12 | [x] | `assets/mario_andretti_8bit.png` |
+| **Alan Jones** | 12 | [x] | `assets/alan_jones_8bit.png` |
+| **Carlos Reutemann** | 12 | [x] | `assets/carlos_reutemann_8bit.png` |
+| **Rubens Barrichello** | 11 | [x] | `assets/rubens_barrichello_8bit.png` |
+| **Felipe Massa** | 11 | [x] | `assets/felipe_massa_8bit.png` |
+| **Jacques Villeneuve** | 11 | [x] | `assets/jacques_villeneuve_8bit.png` |
+| **Gerhard Berger** | 10 | [x] | `assets/gerhard_berger_8bit.png` |
+| **Valtteri Bottas** | 10 | [x] | `assets/valtteri_bottas_8bit.png` |
+| **James Hunt** | 10 | [x] | `assets/james_hunt_8bit.png` |
+| **Ronnie Peterson** | 10 | [x] | `assets/ronnie_peterson_8bit.png` |
 | **Jody Scheckter** | 10 | [ ] |  |
 | **Mark Webber** | 9 | [ ] |  |
 | **Denny Hulme** | 8 | [ ] |  |
 | **Jacky Ickx** | 8 | [ ] |  |
-| **Charles Leclerc** | 8 | [ ] |  |
-| **Daniel Ricciardo** | 8 | [ ] |  |
+| **Charles Leclerc** | 8 | [x] | `assets/charles_leclerc_8bit.png` |
+| **Daniel Ricciardo** | 8 | [x] | `assets/daniel_ricciardo_8bit.png` |
 | **René Arnoux** | 7 | [ ] |  |
 | **Juan Pablo Montoya** | 7 | [ ] |  |
 | **Tony Brooks** | 6 | [ ] |  |
@@ -63,8 +63,8 @@ Style: **Face only (no helmet)**, Trading Card, 8-bit.
 | **Dan Gurney** | 4 | [ ] |  |
 | **Eddie Irvine** | 4 | [ ] |  |
 | **Bruce McLaren** | 4 | [ ] |  |
-| **Lando Norris** | 4 | [ ] |  |
-| **Carlos Sainz** | 4 | [ ] |  |
+| **Lando Norris** | 4 | [x] | `assets/lando_norris_8bit.png` |
+| **Carlos Sainz** | 4 | [x] | `assets/carlos_sainz_8bit.png` |
 | **Thierry Boutsen** | 3 | [ ] |  |
 | **Peter Collins** | 3 | [ ] |  |
 | **Giancarlo Fisichella** | 3 | [ ] |  |
@@ -73,7 +73,7 @@ Style: **Face only (no helmet)**, Trading Card, 8-bit.
 | **Johnny Herbert** | 3 | [ ] |  |
 | **Phil Hill** | 3 | [ ] |  |
 | **Didier Pironi** | 3 | [ ] |  |
-| **George Russell** | 3 | [ ] |  |
+| **George Russell** | 3 | [x] | `assets/george_russell_8bit.png` |
 | **Elio de Angelis** | 2 | [ ] |  |
 | **Patrick Depailler** | 2 | [ ] |  |
 | **José Froilán González** | 2 | [ ] |  |

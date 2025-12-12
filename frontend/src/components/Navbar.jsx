@@ -1,35 +1,61 @@
-import { Link } from 'react-router-dom';
-import { Trophy, Timer, Users, Flag } from 'lucide-react';
+import { Link, useLocation } from 'react-router-dom';
+import { Trophy, Timer, Users, TrendingUp } from 'lucide-react';
 
 export default function Navbar() {
+    const location = useLocation();
+
     return (
-        <nav className="bg-f1-black border-b-4 border-f1-red text-f1-offwhite sticky top-0 z-50">
+        <nav className="bg-black sticky top-0 z-50">
+            {/* Racing stripe top */}
+            <div className="h-1 bg-gradient-to-r from-f1-red via-orange-500 to-f1-red"></div>
+
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex items-center justify-between h-16">
-                    <div className="flex items-center">
-                        <Link to="/" className="flex-shrink-0 flex items-center gap-2">
-                            <Flag className="h-8 w-8 text-f1-red" fill="currentColor" />
-                            <span className="font-racing text-2xl tracking-tighter">F1PEDIA</span>
-                        </Link>
-                        <div className="hidden md:block">
-                            <div className="ml-10 flex items-baseline space-x-4">
-                                <NavLink to="/drivers" icon={<Users size={18} />} text="Drivers" />
-                                <NavLink to="/teams" icon={<Trophy size={18} />} text="Teams" />
-                                <NavLink to="/races" icon={<Timer size={18} />} text="Races" />
-                            </div>
+                    {/* Logo with racing accent */}
+                    <Link to="/" className="flex items-center gap-3 group">
+                        {/* Checkered flag icon */}
+                        <div className="w-8 h-8 grid grid-cols-2 grid-rows-2 rounded overflow-hidden">
+                            <div className="bg-white"></div>
+                            <div className="bg-f1-red"></div>
+                            <div className="bg-f1-red"></div>
+                            <div className="bg-white"></div>
                         </div>
+                        <span className="font-racing text-2xl tracking-tighter text-white group-hover:text-f1-red transition-colors">
+                            F1<span className="text-f1-red group-hover:text-white">PEDIA</span>
+                        </span>
+                    </Link>
+
+                    {/* Navigation */}
+                    <div className="hidden md:flex items-center">
+                        <NavLink to="/drivers" icon={<Users size={16} />} text="Drivers" active={location.pathname === '/drivers'} />
+                        <NavLink to="/teams" icon={<Trophy size={16} />} text="Teams" active={location.pathname.startsWith('/teams')} />
+                        <NavLink to="/races" icon={<Timer size={16} />} text="Races" active={location.pathname === '/races'} />
+                        <NavLink to="/analytics" icon={<TrendingUp size={16} />} text="Analytics" active={location.pathname === '/analytics'} />
+                    </div>
+
+                    {/* Racing badge */}
+                    <div className="hidden lg:flex items-center gap-2 text-gray-500 font-mono text-xs">
+                        <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
+                        LIVE DATA
                     </div>
                 </div>
             </div>
+
+            {/* Bottom accent line */}
+            <div className="h-px bg-gradient-to-r from-transparent via-f1-red to-transparent"></div>
         </nav>
     );
 }
 
-function NavLink({ to, icon, text }) {
+function NavLink({ to, icon, text, active }) {
     return (
         <Link
             to={to}
-            className="flex items-center gap-2 px-3 py-2 rounded-md text-sm font-medium hover:bg-f1-charcoal hover:text-f1-red transition-colors duration-200 font-body uppercase tracking-widest"
+            className={`relative flex items-center gap-2 px-4 py-2 mx-1 text-sm font-racing uppercase tracking-wider transition-all rounded
+                ${active
+                    ? 'text-white bg-f1-red'
+                    : 'text-gray-400 hover:text-white hover:bg-white/5'
+                }`}
         >
             {icon}
             {text}

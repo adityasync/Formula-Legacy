@@ -9,5 +9,16 @@ import java.util.List;
 public interface ResultRepository extends JpaRepository<Result, Integer> {
     List<Result> findByRace_RaceId(Integer raceId);
 
-    List<Result> findByDriver_DriverId(Integer driverId);
+    List<Result> findByDriverDriverId(Integer driverId);
+
+    List<Result> findByConstructorConstructorId(Integer constructorId);
+
+    @org.springframework.data.jpa.repository.Query(value = "SELECT s.status, COUNT(*) as count " +
+            "FROM results r " +
+            "JOIN status s ON r.status_id = s.status_id " +
+            "WHERE s.status != 'Finished' AND s.status NOT LIKE '%Lap%' " +
+            "GROUP BY s.status " +
+            "ORDER BY count DESC " +
+            "LIMIT 15", nativeQuery = true)
+    java.util.List<Object[]> findDNFCauseCounts();
 }
