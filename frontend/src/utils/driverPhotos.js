@@ -81,6 +81,11 @@ const driverPhotoMap = {
     'R. Schumacher': 'ralf_schumacher_8bit.png',
     'Ralf Schumacher': 'ralf_schumacher_8bit.png',
     'Alesi': 'jean_alesi_8bit.png',
+    // Final Batch (Before Limit)
+    'McLaren': 'bruce_mclaren_8bit.png',
+    'Gurney': 'dan_gurney_8bit.png',
+    'Cevert': 'francois_cevert_8bit.png',
+    'Patrese': 'riccardo_patrese_8bit.png',
 };
 
 export function getDriverPhoto(surname) {
