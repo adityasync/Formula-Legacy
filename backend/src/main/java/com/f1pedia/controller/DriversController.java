@@ -1,3 +1,5 @@
+package com.f1pedia.controller;
+
 import com.f1pedia.domain.Driver;
 import com.f1pedia.repository.DriverRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +12,7 @@ import java.util.*;
 @RestController
 @RequestMapping("/api/drivers")
 @CrossOrigin(origins = "http://localhost:5173")
-public class DriverController {
+public class DriversController {
 
     @Autowired
     private DriverRepository driverRepository;
@@ -139,7 +141,7 @@ public class DriverController {
      * Driver championship history
      */
     @GetMapping("/{id}/championships")
-    public List<Map<String, Object>> getDriverChampionships(@PathVariable Integer id) {
+    public List<Map<String, Object>> getDriverChampionships(@PathVariable int id) {
         String sql = """
                 SELECT ra.year, ds.points, ds.position, ds.wins
                 FROM driver_standings ds
@@ -157,7 +159,7 @@ public class DriverController {
      * Driver vs circuit performance
      */
     @GetMapping("/{id}/circuits")
-    public List<Map<String, Object>> getDriverCircuitPerformance(@PathVariable Integer id) {
+    public List<Map<String, Object>> getDriverCircuitPerformance(@PathVariable int id) {
         String sql = """
                 SELECT ci.name as circuit, ci.country,
                        COUNT(*) as races,

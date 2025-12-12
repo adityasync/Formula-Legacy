@@ -18,7 +18,7 @@ This guide outlines how to deploy the full stack (Frontend, Backend, Database) f
 2. Create a new project named `f1pedia`.
 3. Copy the **Connection String** (e.g., `postgres://user:pass@ep-xyz.us-east-2.aws.neon.tech/neondb...`).
    - **Note:** Save this for Phase 2 & 3.
-
+psql 'postgresql://neondb_owner:npg_leJb70vWxBUE@ep-nameless-lab-ahe99c77-pooler.c-3.us-east-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require'
 ---
 
 ## Phase 2: Backend (Render)
