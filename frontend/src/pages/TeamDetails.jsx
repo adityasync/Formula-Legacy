@@ -153,7 +153,8 @@ function TeamDriverCard({ driver }) {
 
     const driverPhoto = getDriverPhotoOrPlaceholder(driver.forename, driver.surname);
 
-    const handleClick = () => {
+    const handleClick = (e) => {
+        e.stopPropagation();
         if (!expanded) {
             setSpinning(true);
             setTimeout(() => {
@@ -168,11 +169,11 @@ function TeamDriverCard({ driver }) {
     return (
         <div
             onClick={handleClick}
-            className={`bg-f1-charcoal border-2 border-f1-warmgray rounded-lg overflow-hidden cursor-pointer transition-all duration-300 transform hover:-translate-y-1 hover:shadow-xl hover:border-f1-red ${expanded ? 'ring-2 ring-f1-red' : ''}`}
+            className={`relative bg-f1-charcoal border-2 border-f1-warmgray rounded-lg overflow-hidden cursor-pointer transition-all duration-300 transform hover:-translate-y-1 hover:shadow-xl hover:border-f1-red ${expanded ? 'ring-2 ring-f1-red' : ''}`}
         >
-            {/* Number badge - top right */}
+            {/* Code badge - top right */}
             <div className="absolute top-2 right-2 flex flex-col items-end z-10">
-                <span className="font-mono text-f1-red text-xl font-bold">#{driver.code || '00'}</span>
+                <span className="font-mono text-f1-red text-sm font-bold">#{driver.code || 'N/A'}</span>
             </div>
 
             {/* Driver Photo on TOP */}
@@ -194,9 +195,20 @@ function TeamDriverCard({ driver }) {
 
                 {/* Name and nationality */}
                 <div className="flex-1 min-w-0">
-                    <h3 className="font-racing text-lg text-f1-offwhite uppercase tracking-wide truncate">
-                        {driver.forename} {driver.surname}
-                    </h3>
+                    <div className="flex items-center gap-2">
+                        {/* Driver Number - racing style */}
+                        {driver.number && (
+                            <span
+                                className="font-racing text-white/20 select-none"
+                                style={{ fontSize: '2.5rem', lineHeight: 1 }}
+                            >
+                                {driver.number}
+                            </span>
+                        )}
+                        <h3 className="font-racing text-lg text-f1-offwhite uppercase tracking-wide truncate">
+                            {driver.forename} {driver.surname}
+                        </h3>
+                    </div>
                     <p className="text-sm text-f1-warmgray">{driver.nationality}</p>
                 </div>
 

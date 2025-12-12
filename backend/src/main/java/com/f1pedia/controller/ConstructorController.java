@@ -48,6 +48,7 @@ public class ConstructorController {
             stats.put("forename", driver.getForename());
             stats.put("surname", driver.getSurname());
             stats.put("code", driver.getCode());
+            stats.put("number", driver.getNumber());
             stats.put("nationality", driver.getNationality());
 
             // Get results for this driver with this constructor
