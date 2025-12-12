@@ -9,6 +9,7 @@ import DriverProfile from './pages/DriverProfile';
 import Analytics from './pages/Analytics';
 import Circuits from './pages/Circuits';
 import CircuitDetails from './pages/CircuitDetails';
+import AudioSettings from './components/AudioSettings';
 
 function App() {
   return (
@@ -26,9 +27,11 @@ function App() {
           <Route path="/races" element={<Races />} />
           <Route path="/analytics" element={<Analytics />} />
         </Routes>
+        <AudioSettings />
       </div>
     </Router>
   );
 }
 
 export default App;
+

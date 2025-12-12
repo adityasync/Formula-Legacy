@@ -1,40 +1,45 @@
+import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Trophy, Timer, Users, TrendingUp, MapPin } from 'lucide-react';
+import { sfx } from '../utils/audio';
 
 export default function Navbar() {
     const location = useLocation();
     const isHome = location.pathname === '/';
+    const [scrolled, setScrolled] = useState(false);
+
+    useEffect(() => {
+        const handleScroll = () => {
+            setScrolled(window.scrollY > 50);
+        };
+        window.addEventListener('scroll', handleScroll);
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, []);
 
     return (
         <motion.nav
-            className={`sticky top-0 z-50 ${isHome ? 'bg-transparent absolute w-full' : 'bg-black'}`}
+            className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isHome && !scrolled
+                ? 'bg-transparent'
+                : 'bg-black/95 backdrop-blur-sm'
+                }`}
             initial={{ y: -100 }}
             animate={{ y: 0 }}
             transition={{ duration: 0.5 }}
         >
-            {/* Racing stripe top - only show on non-home pages */}
-            {!isHome && (
-                <div className="h-1 bg-gradient-to-r from-f1-red via-orange-500 to-f1-red"></div>
-            )}
+            {/* Racing stripe top - show when scrolled or not on home */}
+            <div className={`h-1 bg-gradient-to-r from-f1-red via-orange-500 to-f1-red transition-opacity duration-300 ${isHome && !scrolled ? 'opacity-0' : 'opacity-100'
+                }`}></div>
 
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex items-center justify-between h-16">
-                    {/* Logo with checkered flag */}
-                    <Link to="/" className="flex items-center gap-3 group">
-                        <motion.div
-                            className="w-8 h-8 grid grid-cols-2 grid-rows-2 rounded overflow-hidden"
-                            whileHover={{ rotate: 180 }}
-                            transition={{ duration: 0.3 }}
-                        >
-                            <div className="bg-white"></div>
-                            <div className="bg-f1-red"></div>
-                            <div className="bg-f1-red"></div>
-                            <div className="bg-white"></div>
-                        </motion.div>
-                        <span className="font-racing text-2xl tracking-tighter text-white group-hover:text-f1-red transition-colors">
-                            F1<span className="text-f1-red group-hover:text-white">PEDIA</span>
-                        </span>
+                    {/* Logo only - no text */}
+                    <Link to="/" className="flex items-center group">
+                        <img
+                            src="/logo.png"
+                            alt="F1PEDIA"
+                            className="h-10 w-auto transition-transform group-hover:scale-105"
+                        />
                     </Link>
 
                     {/* Navigation */}
@@ -48,16 +53,15 @@ export default function Navbar() {
                 </div>
             </div>
 
-            {!isHome && (
-                <div className="h-px bg-gradient-to-r from-transparent via-gray-800 to-transparent"></div>
-            )}
+            <div className={`h-px bg-gradient-to-r from-transparent via-gray-800 to-transparent transition-opacity duration-300 ${isHome && !scrolled ? 'opacity-0' : 'opacity-100'
+                }`}></div>
         </motion.nav>
     );
 }
 
 function NavLink({ to, icon, text, active }) {
     return (
-        <Link to={to}>
+        <Link to={to} onClick={() => sfx.gearShift()} onMouseEnter={() => sfx.hover()}>
             <motion.div
                 className={`relative flex items-center gap-2 px-4 py-2 text-sm font-racing uppercase tracking-wider transition-all
                     ${active

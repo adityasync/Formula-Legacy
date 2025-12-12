@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { getDriverPhotoOrPlaceholder } from '../utils/driverPhotos';
+import { sfx } from '../utils/audio';
 
 export default function DriverCard({ driver }) {
     const driverPhoto = getDriverPhotoOrPlaceholder(driver.forename, driver.surname);
@@ -7,6 +8,8 @@ export default function DriverCard({ driver }) {
     return (
         <Link
             to={`/drivers/${driver.driverId}`}
+            onClick={() => sfx.click()}
+            onMouseEnter={() => sfx.hover()}
             className="group bg-f1-charcoal border-2 border-f1-warmgray rounded-lg overflow-hidden hover:border-f1-red transition-all duration-300 transform hover:-translate-y-1 hover:shadow-xl relative block"
         >
             <div className="absolute top-2 right-2 flex flex-col items-end z-10">

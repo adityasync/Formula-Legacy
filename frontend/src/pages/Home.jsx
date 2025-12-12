@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, useScroll, useTransform, useSpring, AnimatePresence } from 'framer-motion';
 import { Users, Trophy, MapPin, ArrowRight, Play, ChevronDown, BarChart3, Flag, Calendar, Zap, Award } from 'lucide-react';
+import { sfx } from '../utils/audio';
 
 export default function Home() {
     const [loaded, setLoaded] = useState(false);
@@ -12,6 +13,8 @@ export default function Home() {
     const smoothProgress = useSpring(scrollYProgress, { stiffness: 100, damping: 30 });
 
     useEffect(() => {
+        // Play start lights sound
+        sfx.startBeep();
         const timer = setTimeout(() => setLoaded(true), 1500);
         return () => clearTimeout(timer);
     }, []);
@@ -51,11 +54,10 @@ export default function Home() {
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 1 }}
                             transition={{ delay: 1.2 }}
-                            className="text-center"
+                            className="flex items-center justify-center gap-4"
                         >
-                            <div className="text-6xl font-racing">
-                                F1<span className="text-f1-red">PEDIA</span>
-                            </div>
+                            <img src="/logo.png" alt="F1PEDIA" className="h-16 w-auto" />
+                            <span className="text-6xl font-racing text-f1-red">PEDIA</span>
                         </motion.div>
                     </motion.div>
                 )}
@@ -111,15 +113,17 @@ export default function Home() {
                     </motion.div>
 
                     <div className="overflow-hidden mb-6">
-                        <motion.h1
-                            className="text-[10rem] md:text-[14rem] font-racing leading-none tracking-tighter"
+                        <motion.div
+                            className="flex items-center justify-center gap-6"
                             initial={{ y: 300 }}
                             animate={loaded ? { y: 0 } : {}}
                             transition={{ duration: 1, ease: [0.25, 0.1, 0, 1], delay: 0.5 }}
                         >
-                            <span className="text-white">F1</span>
-                            <span className="text-f1-red">PEDIA</span>
-                        </motion.h1>
+                            <img src="/logo.png" alt="F1PEDIA" className="h-32 md:h-48 w-auto" />
+                            <h1 className="text-[10rem] md:text-[14rem] font-racing leading-none tracking-tighter text-f1-red">
+                                PEDIA
+                            </h1>
+                        </motion.div>
                     </div>
 
                     <motion.div
