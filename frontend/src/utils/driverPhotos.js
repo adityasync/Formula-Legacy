@@ -11,10 +11,12 @@ const driverPhotoMap = {
     'Stewart': 'jackie_stewart_8bit.png',
     'Lauda': 'niki_lauda_8bit.png',
     'Clark': 'jim_clark_8bit.png',
-    'Fangio': 'juan_manuel_fangio_8bit.png',
+    'Fangio': 'juan_fangio_8bit.png',
     'Piquet': 'nelson_piquet_8bit.png',
     'Rosberg': 'nico_rosberg_8bit.png',
     'Hill': 'damon_hill_8bit.png',
+    'G. Hill': 'graham_hill_8bit.png', // Added Graham Hill
+    'Graham Hill': 'graham_hill_8bit.png',
     'Räikkönen': 'kimi_raikkonen_8bit.png',
     'Häkkinen': 'mika_hakkinen_8bit.png',
     'Moss': 'stirling_moss_8bit.png',
@@ -53,6 +55,9 @@ const driverPhotoMap = {
     'Magnussen': 'kevin_magnussen_8bit.png',
     'Hülkenberg': 'nico_hulkenberg_8bit.png',
     'Hulkenberg': 'nico_hulkenberg_8bit.png',
+    'Nakajima': 'kazuki_nakajima_8bit.png',
+    'Heidfeld': 'nick_heidfeld_8bit.png',
+    'Kovalainen': 'heikki_kovalainen_8bit.png',
 };
 
 export function getDriverPhoto(surname) {
