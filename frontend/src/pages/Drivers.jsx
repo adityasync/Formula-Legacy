@@ -10,6 +10,9 @@ export default function Drivers() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [activeTab, setActiveTab] = useState('legends');
+    const [searchTerm, setSearchTerm] = useState('');
+    const [currentPage, setCurrentPage] = useState(1);
+    const driversPerPage = 24;
 
     useEffect(() => {
         const fetchDrivers = async () => {
@@ -34,10 +37,6 @@ export default function Drivers() {
             </div>
         </div>
     );
-
-    const [searchTerm, setSearchTerm] = useState('');
-    const [currentPage, setCurrentPage] = useState(1);
-    const driversPerPage = 24;
 
     // Filter logic
     const filteredDrivers = allDrivers.filter(d => {
