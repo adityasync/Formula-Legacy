@@ -1,7 +1,22 @@
 import { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, useScroll, useTransform, useSpring, AnimatePresence } from 'framer-motion';
-import { Users, Trophy, MapPin, ArrowRight, Play, ChevronDown, BarChart3, Flag, Calendar, Zap, Award } from 'lucide-react';
+import { Users, Trophy, MapPin, ArrowRight, Play, ChevronDown, BarChart3, Flag, Calendar, Zap, Award, Info } from 'lucide-react';
+import { getLatestSeason } from '../services/api';
+
+const F1_FACTS = [
+    "Juan Manuel Fangio won the World Championship with 4 different teams, a record that still stands.",
+    "A Formula 1 car produces so much downforce that it could theoretically drive upside down on a tunnel ceiling at 100 mph.",
+    "Pit stops used to take over a minute in the 1950s. Today, the world record is 1.80 seconds (McLaren, 2023).",
+    "Drivers can lose up to 4kg (8.8lbs) of body weight during a single race due to heat and G-forces.",
+    "An F1 engine lasts only about 7 races, whereas a commercial car engine typically lasts for 20 years.",
+    "Before 2014, F1 cars used V8, V10, and V12 engines. Now, they use 1.6-liter V6 turbo-hybrids, the most efficient engines in the world.",
+    "The halo device, introduced in 2018, can withstand the weight of a double-decker bus (12 tonnes).",
+    "At full speed, an F1 engine breathes 650 liters of air per second.",
+    "Max Verstappen is the youngest driver to ever start a Formula 1 race at 17 years and 166 days.",
+    "Lewis Hamilton is the only driver to have won a race in every season he competed in (until 2022).",
+    "The 2011 Canadian Grand Prix was the longest race in history, lasting 4 hours, 4 minutes, and 39 seconds."
+];
 
 
 export default function Home() {
@@ -12,9 +27,30 @@ export default function Home() {
     const { scrollYProgress } = useScroll();
     const smoothProgress = useSpring(scrollYProgress, { stiffness: 100, damping: 30 });
 
+    const [currentFact, setCurrentFact] = useState(F1_FACTS[0]);
+
+    // Cycle facts while loading
     useEffect(() => {
-        const timer = setTimeout(() => setLoaded(true), 1500);
-        return () => clearTimeout(timer);
+        if (loaded) return;
+        const interval = setInterval(() => {
+            setCurrentFact(prev => {
+                const currentIndex = F1_FACTS.indexOf(prev);
+                return F1_FACTS[(currentIndex + 1) % F1_FACTS.length];
+            });
+        }, 4000);
+        return () => clearInterval(interval);
+    }, [loaded]);
+
+    useEffect(() => {
+        const init = async () => {
+            // Wait for both minimum animation time AND backend wakeup
+            const minWait = new Promise(resolve => setTimeout(resolve, 2500));
+            const backendCheck = getLatestSeason().catch(() => null); // Fail silently if backend error, just load anyway
+
+            await Promise.all([minWait, backendCheck]);
+            setLoaded(true);
+        };
+        init();
     }, []);
 
     const { scrollYProgress: horizontalProgress } = useScroll({
@@ -52,11 +88,31 @@ export default function Home() {
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 1 }}
                             transition={{ delay: 1.2 }}
-                            className="flex items-center justify-center gap-4"
+                            className="flex flex-col items-center justify-center gap-6"
                         >
                             <span className="text-6xl font-racing text-white">
-                                F1<span className="text-f1-red">PEDIA</span>
+                                Race<span className="text-f1-red"> Control</span>
                             </span>
+
+                            <motion.div
+                                key={currentFact}
+                                initial={{ opacity: 0, y: 20 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                exit={{ opacity: 0, y: -20 }}
+                                className="max-w-md text-center px-6"
+                            >
+                                <div className="flex items-center justify-center gap-2 text-f1-red mb-2 font-mono text-xs tracking-widest uppercase">
+                                    <Info className="w-3 h-3" />
+                                    <span>Did you know?</span>
+                                </div>
+                                <p className="text-gray-400 font-mono text-sm leading-relaxed">
+                                    "{currentFact}"
+                                </p>
+                            </motion.div>
+
+                            <div className="text-xs text-gray-600 font-mono mt-4 animate-pulse">
+                                ESTABLISHING UPLINK TO PADDOCK...
+                            </div>
                         </motion.div>
                     </motion.div>
                 )}
@@ -119,7 +175,7 @@ export default function Home() {
                             transition={{ duration: 1, ease: [0.25, 0.1, 0, 1], delay: 0.5 }}
                         >
                             <h1 className="text-6xl md:text-[10rem] lg:text-[12rem] font-racing leading-none tracking-tighter text-white">
-                                F1<span className="text-f1-red">PEDIA</span>
+                                Race<span className="text-f1-red"> Control</span>
                             </h1>
                         </motion.div>
                     </div>
@@ -492,7 +548,7 @@ export default function Home() {
 
                     <div className="flex flex-col md:flex-row justify-between items-center gap-12">
                         <div>
-                            <div className="text-5xl font-racing mb-2">F1<span className="text-f1-red">PEDIA</span></div>
+                            <div className="text-5xl font-racing mb-2">Race<span className="text-f1-red"> Control</span></div>
                             <p className="text-gray-600 font-mono text-sm tracking-wider">THE COMPLETE F1 ARCHIVE • 1950—2024</p>
                         </div>
                         <nav className="flex flex-wrap justify-center gap-8">

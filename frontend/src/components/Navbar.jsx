@@ -50,7 +50,7 @@ export default function Navbar() {
                     <Link to="/" className="flex items-center group z-50 relative">
                         <img
                             src="/logo.png"
-                            alt="F1PEDIA"
+                            alt="Race Control"
                             className="h-10 w-auto transition-transform group-hover:scale-105"
                         />
                     </Link>
@@ -102,7 +102,7 @@ export default function Navbar() {
                 <div className="relative z-10 flex flex-col h-full">
                     {/* Menu Logo */}
                     <div className="mb-8 pl-2">
-                        <img src="/logo.png" alt="F1PEDIA" className="h-12 w-auto opacity-80" />
+                        <img src="/logo.png" alt="Race Control" className="h-12 w-auto opacity-80" />
                     </div>
 
                     <div className="flex flex-col gap-2 text-3xl font-racing uppercase tracking-wider">

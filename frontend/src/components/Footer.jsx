@@ -17,7 +17,7 @@ export default function Footer() {
                     <div>
                         <Link to="/" className="flex items-center gap-1 group">
                             <span className="text-4xl font-racing text-white group-hover:text-f1-red transition-colors">
-                                F1<span className="text-f1-red group-hover:text-white">PEDIA</span>
+                                Race<span className="text-f1-red group-hover:text-white"> Control</span>
                             </span>
                         </Link>
                         <p className="text-gray-600 font-mono text-xs tracking-wider mt-2">
