@@ -32,7 +32,7 @@ public class DriversController {
     public List<Map<String, Object>> getDriverStats() {
         String sql = """
                 SELECT
-                    d.driver_id as driverId,
+                    d.driver_id as "driverId",
                     d.forename || ' ' || d.surname as name,
                     d.code,
                     d.nationality,
