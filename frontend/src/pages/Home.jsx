@@ -77,7 +77,7 @@ export default function Home() {
                     <div className="absolute inset-0 opacity-[0.02]" style={{
                         backgroundImage: `repeating-linear-gradient(-45deg, transparent, transparent 100px, white 100px, white 102px)`
                     }} />
-                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1000px] h-[600px] bg-f1-red/10 rounded-full blur-[200px]" />
+                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80vw] md:w-[1000px] h-[600px] bg-f1-red/10 rounded-full blur-[200px]" />
 
                     {[...Array(5)].map((_, i) => (
                         <motion.div
@@ -387,7 +387,7 @@ export default function Home() {
             </section>
 
             {/* ===== ALL-TIME RECORDS ===== */}
-            <section className="relative py-32 px-6 bg-gradient-to-b from-gray-950 to-black">
+            <section className="relative py-32 px-6 bg-gradient-to-b from-gray-950 to-black overflow-hidden">
                 <div className="max-w-7xl mx-auto">
                     <motion.div
                         initial={{ opacity: 0, y: 50 }}
@@ -433,13 +433,13 @@ export default function Home() {
             </section>
 
             {/* ===== CHAMPIONS SECTION ===== */}
-            <section className="relative py-32 px-6">
+            <section className="relative py-32 px-6 overflow-hidden">
                 <div className="absolute inset-0 opacity-[0.02]">
-                    <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[600px]">
+                    <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[600px]">
                         <div className="flex items-end justify-center gap-4">
-                            <div className="w-32 h-48 bg-white" />
-                            <div className="w-32 h-64 bg-white" />
-                            <div className="w-32 h-40 bg-white" />
+                            <div className="w-20 md:w-32 h-32 md:h-48 bg-white" />
+                            <div className="w-20 md:w-32 h-48 md:h-64 bg-white" />
+                            <div className="w-20 md:w-32 h-24 md:h-40 bg-white" />
                         </div>
                     </div>
                 </div>
