@@ -20,7 +20,9 @@ public class CorsConfig implements WebMvcConfigurer {
                         "http://localhost:3000",
                         "http://127.0.0.1:5173",
                         "http://127.0.0.1:3000",
-                        "https://formula-legacy.vercel.app")
+                        "https://formula-legacy.vercel.app",
+                        "https://race-control.vercel.app",
+                        "https://frace-control.vercel.app")
                 .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                 .allowedHeaders("*")
                 .allowCredentials(true)
