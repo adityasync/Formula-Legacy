@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Trophy, Timer, Users, TrendingUp, MapPin } from 'lucide-react';
-import { sfx } from '../utils/audio';
+
 
 export default function Navbar() {
     const location = useLocation();
@@ -122,7 +122,7 @@ function MobileLink({ to, onClick, text }) {
 
 function NavLink({ to, icon, text, active }) {
     return (
-        <Link to={to} onClick={() => sfx.gearShift()} onMouseEnter={() => sfx.hover()}>
+        <Link to={to}>
             <motion.div
                 className={`relative flex items-center gap-2 px-4 py-2 text-sm font-racing uppercase tracking-wider transition-all
                 ${active

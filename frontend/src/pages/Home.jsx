@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, useScroll, useTransform, useSpring, AnimatePresence } from 'framer-motion';
 import { Users, Trophy, MapPin, ArrowRight, Play, ChevronDown, BarChart3, Flag, Calendar, Zap, Award } from 'lucide-react';
-import { sfx } from '../utils/audio';
+
 
 export default function Home() {
     const [loaded, setLoaded] = useState(false);
@@ -13,8 +13,6 @@ export default function Home() {
     const smoothProgress = useSpring(scrollYProgress, { stiffness: 100, damping: 30 });
 
     useEffect(() => {
-        // Play start lights sound
-        sfx.startBeep();
         const timer = setTimeout(() => setLoaded(true), 1500);
         return () => clearTimeout(timer);
     }, []);
