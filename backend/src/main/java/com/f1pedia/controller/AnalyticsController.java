@@ -262,6 +262,24 @@ public class AnalyticsController {
         return jdbcTemplate.queryForList(sql, season);
     }
 
+    @GetMapping("/constructor-championship")
+    public List<Map<String, Object>> getConstructorChampionship(@RequestParam(defaultValue = "2023") int season) {
+        String sql = """
+                SELECT c.name as constructor,
+                       ra.round,
+                       ra.name as race,
+                       cs.points,
+                       cs.position,
+                       cs.wins
+                FROM constructor_standings cs
+                JOIN constructors c ON cs.constructor_id = c.constructor_id
+                JOIN races ra ON cs.race_id = ra.race_id
+                WHERE ra.year = ?
+                ORDER BY c.constructor_id, ra.round
+                """;
+        return jdbcTemplate.queryForList(sql, season);
+    }
+
     /**
      * Teammate qualifying battle
      */

@@ -189,7 +189,7 @@ export default function Home() {
                 </div>
 
                 <motion.div
-                    className="relative mt-16 md:absolute md:mt-0 md:bottom-12 left-1/2 -translate-x-1/2"
+                    className="absolute bottom-12 left-1/2 -translate-x-1/2"
                     initial={{ opacity: 0 }}
                     animate={loaded ? { opacity: 1 } : {}}
                     transition={{ delay: 2 }}

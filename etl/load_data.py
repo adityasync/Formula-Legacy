@@ -2,6 +2,9 @@ import pandas as pd
 from sqlalchemy import create_engine, text
 import os
 import re
+import sys
+
+print("Starting ETL Script...", flush=True)
 
 # Database Configuration
 if os.getenv('DATABASE_URL'):

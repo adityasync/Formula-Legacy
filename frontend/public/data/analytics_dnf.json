@@ -1,0 +1,42 @@
+[
+  {
+    "status": "Engine",
+    "count": 2026
+  },
+  {
+    "status": "Accident",
+    "count": 1062
+  },
+  {
+    "status": "Did not qualify",
+    "count": 1025
+  },
+  {
+    "status": "Collision",
+    "count": 854
+  },
+  {
+    "status": "Gearbox",
+    "count": 810
+  },
+  {
+    "status": "Spun off",
+    "count": 795
+  },
+  {
+    "status": "Suspension",
+    "count": 431
+  },
+  {
+    "status": "Did not prequalify",
+    "count": 331
+  },
+  {
+    "status": "Transmission",
+    "count": 321
+  },
+  {
+    "status": "Electrical",
+    "count": 316
+  }
+]
