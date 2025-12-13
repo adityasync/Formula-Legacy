@@ -232,7 +232,7 @@ export default function Home() {
                     {/* Timeline */}
                     <div className="relative">
                         {/* Center line */}
-                        <div className="absolute left-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-f1-red via-orange-500 to-f1-red" />
+                        <div className="absolute left-4 md:left-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-f1-red via-orange-500 to-f1-red" />
 
                         {[
                             {
@@ -298,23 +298,23 @@ export default function Home() {
                                 whileInView={{ opacity: 1, x: 0 }}
                                 viewport={{ once: true, margin: "-100px" }}
                                 transition={{ duration: 0.6, delay: i * 0.1 }}
-                                className={`relative flex items-center mb-16 ${i % 2 === 0 ? 'justify-start' : 'justify-end'}`}
+                                className={`relative flex items-center mb-16 md:mb-24 ${i % 2 === 0 ? 'md:justify-start' : 'md:justify-end'} justify-end`}
                             >
                                 {/* Timeline dot */}
                                 <motion.div
-                                    className="absolute left-1/2 -translate-x-1/2 w-4 h-4 rounded-full border-4 border-black"
+                                    className="absolute left-4 md:left-1/2 -translate-x-1/2 w-4 h-4 rounded-full border-4 border-black"
                                     style={{ backgroundColor: era.color }}
                                     whileHover={{ scale: 1.5 }}
                                 />
 
                                 {/* Era card */}
                                 <motion.div
-                                    className={`w-[45%] p-8 bg-gray-900/50 border border-gray-800 backdrop-blur-sm ${i % 2 === 0 ? 'mr-auto text-right pr-16' : 'ml-auto text-left pl-16'
-                                        }`}
+                                    className={`w-full ml-12 md:ml-0 md:w-[45%] p-6 md:p-8 bg-gray-900/50 border border-gray-800 backdrop-blur-sm 
+                                    ${i % 2 === 0 ? 'md:mr-auto md:text-right md:pr-16 text-left' : 'md:ml-auto md:text-left md:pl-16 text-left'}`}
                                     whileHover={{ borderColor: era.color, backgroundColor: `${era.color}10` }}
                                 >
-                                    <div className="text-6xl font-racing mb-2" style={{ color: era.color }}>{era.era}</div>
-                                    <h3 className="text-2xl font-racing text-white mb-3">{era.title}</h3>
+                                    <div className="text-4xl md:text-6xl font-racing mb-2" style={{ color: era.color }}>{era.era}</div>
+                                    <h3 className="text-xl md:text-2xl font-racing text-white mb-3">{era.title}</h3>
                                     <p className="text-gray-400 text-sm mb-4">{era.description}</p>
                                     <div className="inline-flex items-center gap-2 px-3 py-1 bg-black/50 border-l-2" style={{ borderColor: era.color }}>
                                         <Zap className="w-3 h-3" style={{ color: era.color }} />
