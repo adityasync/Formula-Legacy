@@ -1,15 +1,30 @@
-# 🏎️ Race Control
+<div align="center">
+  <img src="frontend/public/logo.png" alt="Race Control Logo" width="120" />
+  <h1>🏎️ Race Control</h1>
+  
+  <p>
+    <strong>The ultimate historic database of Formula 1</strong><br>
+    A full-stack, data-driven F1 history & analytics platform.
+  </p>
 
-> The ultimate historic database of Formula 1 — A full-stack, data-driven F1 history & analytics platform.
+  <p>
+    <a href="https://racecontrol.vercel.app/">
+      <img src="https://img.shields.io/badge/Live_Preview-racecontrol.vercel.app-E10600?style=for-the-badge&logo=vercel&logoColor=white" alt="Live Preview" />
+    </a>
+  </p>
 
-Race Control is an immersive, data-rich application designed to visualize the complete history of Formula 1. It features **driver archives**, **constructor profiles**, **race calendars**, **advanced analytics**, **ML predictions**, and stunning 8-bit driver portraits, all wrapped in a broadcast-quality racing aesthetic with immersive sound effects.
+  <p>
+    <img src="https://img.shields.io/badge/Spring%20Boot-3.2.4-6DB33F?style=flat-square&logo=spring-boot" alt="Spring Boot" />
+    <img src="https://img.shields.io/badge/React-19-61DAFB?style=flat-square&logo=react" alt="React" />
+    <img src="https://img.shields.io/badge/PostgreSQL-16-336791?style=flat-square&logo=postgresql" alt="PostgreSQL" />
+    <img src="https://img.shields.io/badge/Tailwind-3.4-38B2AC?style=flat-square&logo=tailwind-css" alt="TailwindCSS" />
+    <img src="https://github.com/adityasync/Formula-Legacy/actions/workflows/ci.yml/badge.svg" alt="CI Status" />
+  </p>
+</div>
 
-![Race Control](https://img.shields.io/badge/Race-Control-E10600?style=for-the-badge)
-![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.2.4-6DB33F?style=flat-square&logo=spring-boot)
-![React](https://img.shields.io/badge/React-19-61DAFB?style=flat-square&logo=react)
-![PostgreSQL](https://img.shields.io/badge/PostgreSQL-16-336791?style=flat-square&logo=postgresql)
-![TailwindCSS](https://img.shields.io/badge/Tailwind-3.4-38B2AC?style=flat-square&logo=tailwind-css)
-![CI](https://github.com/adityasync/Formula-Legacy/actions/workflows/ci.yml/badge.svg)
+<br />
+
+Race Control is an immersive, data-rich application designed to visualize the complete history of Formula 1. It features **driver archives**, **constructor profiles**, **race calendars**, **advanced analytics**, **predictive analytics**, and stunning 8-bit driver portraits, all wrapped in a broadcast-quality racing aesthetic.
 
 ---
 
@@ -21,7 +36,7 @@ This project embraces a cohesive **motorsport identity** inspired by F1 broadcas
 - **Typography:** Racing-inspired fonts with monospace data displays
 - **Racing Elements:** Checkered flags, racing stripes, speed lines, and tyre animations
 - **8-Bit Portraits:** Unique pixel-art driver portraits generated with AI
-- **Immersive SFX:** Engine revs, pit clicks, gear shifts, and crowd cheers
+
 
 ---
 
@@ -93,7 +108,6 @@ graph LR
 |-------|------------|---------|
 | **Frontend** | React 19 + Vite | SPA with racing UI & Framer Motion animations |
 | **Styling** | Tailwind CSS | Utility-first CSS with custom F1 theme |
-| **Audio** | Howler.js + Zustand | Immersive racing sound effects |
 | **Charts** | Recharts | Analytics visualizations |
 | **Backend** | Spring Boot 3.2 | RESTful API with analytics endpoints |
 | **ORM** | Hibernate/JPA | Object-relational mapping |
@@ -116,7 +130,6 @@ formula-legacy/
 │   └── pom.xml
 ├── frontend/                # React frontend
 │   ├── public/
-│   │   ├── audio/           # Racing SFX files
 │   │   └── logo.png
 │   ├── src/
 │   │   ├── components/      # Reusable UI components
@@ -154,7 +167,7 @@ formula-legacy/
 ### 👨‍✈️ Driver Archive
 - 860+ F1 drivers from 1950-2024
 - Legends vs Current Era tabs
-- AI-generated 8-bit pixel art portraits
+- 8-Bit Pixel Art Portraits
 - Career statistics & team history
 
 ### 🏆 Constructor Profiles
@@ -189,16 +202,9 @@ formula-legacy/
 
 ### 📈 Predictive Analytics
 - Race outcome probabilities based on historical data
-- Points likelihood scoring
-- Statistical regression analysis
+- Points efficiency analysis
 
-### 🔊 Immersive Audio
-- F1 start lights countdown beeps
-- Engine rev sounds
-- Pit stop wheel gun clicks
-- Gear shift blips
-- Crowd cheers
-- Mute toggle & volume control
+
 
 ---
 
@@ -297,23 +303,7 @@ GET /api/analytics/season-dominance
 
 ---
 
-## 🎵 Sound Effects
 
-The app includes immersive racing SFX generated via audio synthesis:
-
-| Sound | Trigger |
-|-------|---------|
-| `start_beep.wav` | Homepage loading (F1 start lights) |
-| `engine_rev.wav` | Test button in audio settings |
-| `pit_click.wav` | Available for interactions |
-| `gear_shift.wav` | Navbar navigation clicks |
-| `cheer.wav` | Available for celebrations |
-| `click.wav` | Card/button clicks |
-| `hover.wav` | Card hover effects |
-
-Audio controls available in bottom-right corner (mute toggle + volume slider).
-
----
 
 ## 📄 License
 
