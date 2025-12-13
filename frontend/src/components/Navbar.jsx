@@ -92,7 +92,7 @@ export default function Navbar() {
 
             {/* Mobile Menu Overlay */}
             <motion.div
-                className={`fixed inset-0 bg-zinc-950 pt-24 px-6 md:hidden ${isOpen ? 'pointer-events-auto' : 'pointer-events-none'}`}
+                className={`fixed inset-0 bg-black pt-24 px-6 md:hidden ${isOpen ? 'pointer-events-auto' : 'pointer-events-none'}`}
                 initial={{ opacity: 0, x: '100%' }}
                 animate={isOpen ? { opacity: 1, x: 0 } : { opacity: 0, x: '100%' }}
                 transition={{ type: "spring", damping: 20 }}
