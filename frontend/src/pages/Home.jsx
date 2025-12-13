@@ -27,30 +27,14 @@ export default function Home() {
     const { scrollYProgress } = useScroll();
     const smoothProgress = useSpring(scrollYProgress, { stiffness: 100, damping: 30 });
 
-    const [currentFact, setCurrentFact] = useState(F1_FACTS[0]);
-
-    // Cycle facts while loading
     useEffect(() => {
-        if (loaded) return;
-        const interval = setInterval(() => {
-            setCurrentFact(prev => {
-                const currentIndex = F1_FACTS.indexOf(prev);
-                return F1_FACTS[(currentIndex + 1) % F1_FACTS.length];
-            });
-        }, 4000);
-        return () => clearInterval(interval);
-    }, [loaded]);
+        // Quick simple timeout to show the "lights out" animation
+        const timer = setTimeout(() => setLoaded(true), 1500);
 
-    useEffect(() => {
-        const init = async () => {
-            // Wait for both minimum animation time AND backend wakeup
-            const minWait = new Promise(resolve => setTimeout(resolve, 2500));
-            const backendCheck = getLatestSeason().catch(() => null); // Fail silently if backend error, just load anyway
+        // Silently wake up the backend if it's sleeping, so it's ready for other pages
+        getLatestSeason().catch(() => { });
 
-            await Promise.all([minWait, backendCheck]);
-            setLoaded(true);
-        };
-        init();
+        return () => clearTimeout(timer);
     }, []);
 
     const { scrollYProgress: horizontalProgress } = useScroll({
@@ -88,31 +72,11 @@ export default function Home() {
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 1 }}
                             transition={{ delay: 1.2 }}
-                            className="flex flex-col items-center justify-center gap-6"
+                            className="flex items-center justify-center gap-4"
                         >
                             <span className="text-6xl font-racing text-white">
                                 Race<span className="text-f1-red"> Control</span>
                             </span>
-
-                            <motion.div
-                                key={currentFact}
-                                initial={{ opacity: 0, y: 20 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                exit={{ opacity: 0, y: -20 }}
-                                className="max-w-md text-center px-6"
-                            >
-                                <div className="flex items-center justify-center gap-2 text-f1-red mb-2 font-mono text-xs tracking-widest uppercase">
-                                    <Info className="w-3 h-3" />
-                                    <span>Did you know?</span>
-                                </div>
-                                <p className="text-gray-400 font-mono text-sm leading-relaxed">
-                                    "{currentFact}"
-                                </p>
-                            </motion.div>
-
-                            <div className="text-xs text-gray-600 font-mono mt-4 animate-pulse">
-                                ESTABLISHING UPLINK TO PADDOCK...
-                            </div>
                         </motion.div>
                     </motion.div>
                 )}

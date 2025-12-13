@@ -5,6 +5,8 @@ import { Loader2, ChevronRight, Trophy, Flag, Calendar, MapPin, ArrowLeft, Trend
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell, Legend, LineChart, Line, AreaChart, Area } from 'recharts';
 import { getDriverPhotoOrPlaceholder } from '../utils/driverPhotos';
 
+import SmartLoader from '../components/SmartLoader';
+
 export default function DriverProfile() {
     const { id } = useParams();
     const [career, setCareer] = useState(null);
@@ -46,11 +48,7 @@ export default function DriverProfile() {
         fetchData();
     }, [id]);
 
-    if (loading) return (
-        <div className="min-h-screen bg-black flex items-center justify-center">
-            <Loader2 className="animate-spin h-12 w-12 text-f1-red" aria-label="Loading" role="status" />
-        </div>
-    );
+    if (loading) return <SmartLoader message="Analyzing Driver Telemetry..." />;
 
     if (!career) return (
         <div className="min-h-screen bg-black p-8 text-white">

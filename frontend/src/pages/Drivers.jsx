@@ -5,6 +5,8 @@ import DriverCard from '../components/DriverCard';
 import Footer from '../components/Footer';
 import { Loader2, Star, Users, ChevronRight } from 'lucide-react';
 
+import SmartLoader from '../components/SmartLoader';
+
 export default function Drivers() {
     const [allDrivers, setAllDrivers] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -29,14 +31,7 @@ export default function Drivers() {
         fetchDrivers();
     }, []);
 
-    if (loading) return (
-        <div className="min-h-screen bg-black flex items-center justify-center">
-            <div className="text-center">
-                <Loader2 className="animate-spin h-12 w-12 text-f1-red mx-auto mb-4" aria-label="Loading drivers" role="status" />
-                <p className="text-gray-500 font-mono text-sm">Loading drivers...</p>
-            </div>
-        </div>
-    );
+    if (loading) return <SmartLoader message="Loading Drivers Archive..." />;
 
     // Filter logic
     const filteredDrivers = allDrivers.filter(d => {
