@@ -1,12 +1,12 @@
-# 🏎️ Formula Legacy
+# 🏎️ Race Control
 
 > The ultimate historic database of Formula 1 — A full-stack, data-driven F1 history & analytics platform.
 
-Formula Legacy is an immersive, data-rich application designed to visualize the complete history of Formula 1. It features **driver archives**, **constructor profiles**, **race calendars**, **advanced analytics**, **ML predictions**, and stunning 8-bit driver portraits, all wrapped in a broadcast-quality racing aesthetic with immersive sound effects.
+Race Control is an immersive, data-rich application designed to visualize the complete history of Formula 1. It features **driver archives**, **constructor profiles**, **race calendars**, **advanced analytics**, **ML predictions**, and stunning 8-bit driver portraits, all wrapped in a broadcast-quality racing aesthetic with immersive sound effects.
 
-![Formula Legacy](https://img.shields.io/badge/Formula-Legacy-E10600?style=for-the-badge)
+![Race Control](https://img.shields.io/badge/Race-Control-E10600?style=for-the-badge)
 ![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.2.4-6DB33F?style=flat-square&logo=spring-boot)
-![React](https://img.shields.io/badge/React-18-61DAFB?style=flat-square&logo=react)
+![React](https://img.shields.io/badge/React-19-61DAFB?style=flat-square&logo=react)
 ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-16-336791?style=flat-square&logo=postgresql)
 ![TailwindCSS](https://img.shields.io/badge/Tailwind-3.4-38B2AC?style=flat-square&logo=tailwind-css)
 ![CI](https://github.com/adityasync/Formula-Legacy/actions/workflows/ci.yml/badge.svg)
@@ -35,11 +35,13 @@ graph TD
         Teams[Teams]
         Analytics[Analytics]
         APIService[API Service]
+        SmartLoader[Smart Loader]
         
         Home --> APIService
         Drivers --> APIService
         Teams --> APIService
         Analytics --> APIService
+        Drivers --> SmartLoader
     end
 
     subgraph Backend ["Backend (Spring Boot 3.2)"]
@@ -59,11 +61,49 @@ graph TD
     Repositories -- "JPA/Hibernate" --> DB
 ```
 
+### Data & ML Pipeline
+
+```mermaid
+graph LR
+    subgraph DataSources ["Raw Data (Ergast API)"]
+        CSV[CSV Files]
+    end
+
+    subgraph ETL ["ETL Pipeline (Python)"]
+        Loader[load_data.py]
+        Cleaner[Data Cleaning]
+        Schema[Schema Initialization]
+        
+        CSV --> Loader
+        Loader --> Cleaner
+        Cleaner --> Schema
+    end
+
+    subgraph Storage ["Data Storage"]
+        Postgres[(PostgreSQL DB)]
+    end
+
+    subgraph ML ["ML Workflow (Offline)"]
+        FeatureEng[feature_engineering.py]
+        Trainer[train_race_predictor.py]
+        XGBoost[[XGBoost Model]]
+        Artifacts[Model Artifacts / Insights]
+        
+        CSV -.-> FeatureEng
+        FeatureEng --> Trainer
+        Trainer --> XGBoost
+        XGBoost --> Artifacts
+    end
+
+    Schema --> Postgres
+    Loader --> Postgres
+```
+
 ### Tech Stack
 
 | Layer | Technology | Purpose |
 |-------|------------|---------|
-| **Frontend** | React 18 + Vite | SPA with racing UI & Framer Motion animations |
+| **Frontend** | React 19 + Vite | SPA with racing UI & Framer Motion animations |
 | **Styling** | Tailwind CSS | Utility-first CSS with custom F1 theme |
 | **Audio** | Howler.js + Zustand | Immersive racing sound effects |
 | **Charts** | Recharts | Analytics visualizations |
@@ -153,6 +193,12 @@ formula-legacy/
 - Teammate head-to-head battles
 - DNF cause analysis
 - Pit stop efficiency rankings
+- **Circuit Risk/Reliability Analysis**: Detailed stats on high-risk circuits and DNF rates
+
+### 🧩 Smart Loader
+- Context-aware loading screens
+- Displays interesting F1 facts while fetching data
+- Eliminates perceived latency on heavy data pages
 
 ### 🤖 ML Predictions
 - Race outcome predictions
@@ -257,6 +303,9 @@ GET /api/analytics/teammate-battles?season={year}
 GET /api/analytics/dnf-causes
 GET /api/analytics/pit-stop-efficiency?season={year}
 GET /api/analytics/championship-battle?season={year}
+GET /api/analytics/circuit-reliability
+GET /api/analytics/driver-form
+GET /api/analytics/season-dominance
 ```
 
 ---
@@ -292,5 +341,5 @@ This project is for educational and portfolio purposes. F1 data sourced from [Er
 ---
 
 <p align="center">
-  <strong>Formula Legacy</strong> — Racing Through History 🏁
+  <strong>Race Control</strong> — Racing Through History 🏁
 </p>
