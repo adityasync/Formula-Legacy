@@ -12,7 +12,6 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/analytics")
-@CrossOrigin(origins = "http://localhost:5173")
 public class AnalyticsController {
 
     @Autowired
@@ -26,6 +25,23 @@ public class AnalyticsController {
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
+
+    /**
+     * Helper method to get the latest season from the database.
+     * Cached to avoid repeated queries within the same request context.
+     */
+    private Integer getLatestSeason() {
+        String sql = "SELECT MAX(year) FROM races";
+        Integer latest = jdbcTemplate.queryForObject(sql, Integer.class);
+        return latest != null ? latest : java.time.Year.now().getValue();
+    }
+
+    /**
+     * Resolve season parameter - uses latest season if not specified.
+     */
+    private int resolveSeason(Integer season) {
+        return season != null ? season : getLatestSeason();
+    }
 
     // ===========================================
     // EXISTING ENDPOINTS
@@ -100,7 +116,8 @@ public class AnalyticsController {
      * Grid position vs finish position analysis (overtaking stats)
      */
     @GetMapping("/grid-performance")
-    public List<Map<String, Object>> getGridPerformance(@RequestParam(defaultValue = "2023") int season) {
+    public List<Map<String, Object>> getGridPerformance(@RequestParam(required = false) Integer season) {
+        int targetSeason = resolveSeason(season);
         String sql = """
                 SELECT d.forename || ' ' || d.surname as driver,
                        COUNT(*) as races,
@@ -117,14 +134,15 @@ public class AnalyticsController {
                 HAVING COUNT(*) >= 5
                 ORDER BY avg_positions_gained DESC
                 """;
-        return jdbcTemplate.queryForList(sql, season);
+        return jdbcTemplate.queryForList(sql, targetSeason);
     }
 
     /**
      * Qualifying performance - Q1 to Q3 progression rates
      */
     @GetMapping("/qualifying-progression")
-    public List<Map<String, Object>> getQualifyingProgression(@RequestParam(defaultValue = "2023") int season) {
+    public List<Map<String, Object>> getQualifyingProgression(@RequestParam(required = false) Integer season) {
+        int targetSeason = resolveSeason(season);
         String sql = """
                 SELECT d.forename || ' ' || d.surname as driver,
                        c.name as team,
@@ -142,14 +160,15 @@ public class AnalyticsController {
                 GROUP BY d.driver_id, d.forename, d.surname, c.name
                 ORDER BY q3_rate DESC, poles DESC
                 """;
-        return jdbcTemplate.queryForList(sql, season);
+        return jdbcTemplate.queryForList(sql, targetSeason);
     }
 
     /**
      * Fastest lap analysis - who sets them and when
      */
     @GetMapping("/fastest-laps")
-    public List<Map<String, Object>> getFastestLapStats(@RequestParam(defaultValue = "2023") int season) {
+    public List<Map<String, Object>> getFastestLapStats(@RequestParam(required = false) Integer season) {
+        int targetSeason = resolveSeason(season);
         String sql = """
                 SELECT d.forename || ' ' || d.surname as driver,
                        COUNT(*) as fastest_laps,
@@ -163,7 +182,7 @@ public class AnalyticsController {
                 GROUP BY d.driver_id, d.forename, d.surname
                 ORDER BY fastest_laps DESC
                 """;
-        return jdbcTemplate.queryForList(sql, season);
+        return jdbcTemplate.queryForList(sql, targetSeason);
     }
 
     /**
@@ -245,7 +264,8 @@ public class AnalyticsController {
      * Championship battle - points progression through season
      */
     @GetMapping("/championship-battle")
-    public List<Map<String, Object>> getChampionshipBattle(@RequestParam(defaultValue = "2023") int season) {
+    public List<Map<String, Object>> getChampionshipBattle(@RequestParam(required = false) Integer season) {
+        int targetSeason = resolveSeason(season);
         String sql = """
                 SELECT d.forename || ' ' || d.surname as driver,
                        ra.round,
@@ -259,11 +279,12 @@ public class AnalyticsController {
                 WHERE ra.year = ?
                 ORDER BY d.driver_id, ra.round
                 """;
-        return jdbcTemplate.queryForList(sql, season);
+        return jdbcTemplate.queryForList(sql, targetSeason);
     }
 
     @GetMapping("/constructor-championship")
-    public List<Map<String, Object>> getConstructorChampionship(@RequestParam(defaultValue = "2023") int season) {
+    public List<Map<String, Object>> getConstructorChampionship(@RequestParam(required = false) Integer season) {
+        int targetSeason = resolveSeason(season);
         String sql = """
                 SELECT c.name as constructor,
                        ra.round,
@@ -277,14 +298,15 @@ public class AnalyticsController {
                 WHERE ra.year = ?
                 ORDER BY c.constructor_id, ra.round
                 """;
-        return jdbcTemplate.queryForList(sql, season);
+        return jdbcTemplate.queryForList(sql, targetSeason);
     }
 
     /**
      * Teammate qualifying battle
      */
     @GetMapping("/teammate-battles")
-    public List<Map<String, Object>> getTeammateBattles(@RequestParam(defaultValue = "2023") int season) {
+    public List<Map<String, Object>> getTeammateBattles(@RequestParam(required = false) Integer season) {
+        int targetSeason = resolveSeason(season);
         String sql = """
                 WITH team_quali AS (
                     SELECT q.race_id, q.constructor_id, q.driver_id, q.position,
@@ -309,14 +331,15 @@ public class AnalyticsController {
                 HAVING COUNT(*) >= 5
                 ORDER BY c.name
                 """;
-        return jdbcTemplate.queryForList(sql, season);
+        return jdbcTemplate.queryForList(sql, targetSeason);
     }
 
     /**
      * Points per race efficiency
      */
     @GetMapping("/points-efficiency")
-    public List<Map<String, Object>> getPointsEfficiency(@RequestParam(defaultValue = "2023") int season) {
+    public List<Map<String, Object>> getPointsEfficiency(@RequestParam(required = false) Integer season) {
+        int targetSeason = resolveSeason(season);
         String sql = """
                 SELECT d.forename || ' ' || d.surname as driver,
                        c.name as team,
@@ -333,7 +356,61 @@ public class AnalyticsController {
                 GROUP BY d.driver_id, d.forename, d.surname, c.name
                 ORDER BY points_per_race DESC
                 """;
-        return jdbcTemplate.queryForList(sql, season);
+        return jdbcTemplate.queryForList(sql, targetSeason);
+    }
+
+    /**
+     * Pit Stop Team Efficiency - Avg duration by constructor
+     */
+    @GetMapping("/pit-stop-team-efficiency")
+    public List<Map<String, Object>> getPitStopTeamEfficiency(@RequestParam(required = false) Integer season) {
+        int targetSeason = resolveSeason(season);
+        String sql = """
+                SELECT c.name as constructor,
+                       ROUND(AVG(ps.milliseconds)::numeric / 1000, 3) as avg_duration,
+                       MIN(ps.milliseconds)::numeric / 1000 as min_duration,
+                       COUNT(*) as total_stops
+                FROM pit_stops ps
+                JOIN results r ON ps.race_id = r.race_id AND ps.driver_id = r.driver_id
+                JOIN constructors c ON r.constructor_id = c.constructor_id
+                JOIN races ra ON ps.race_id = ra.race_id
+                WHERE ra.year = ? AND ps.milliseconds < 50000 -- Filter out outliers/penalties > 50s
+                GROUP BY c.constructor_id, c.name
+                HAVING COUNT(*) > 10
+                ORDER BY avg_duration ASC
+                """;
+        return jdbcTemplate.queryForList(sql, targetSeason);
+    }
+
+    /**
+     * Winning Strategy Analysis - Number of stops vs Win Rate
+     */
+    @GetMapping("/pit-strategy-stats")
+    public List<Map<String, Object>> getWinningStrategyStats(@RequestParam(required = false) Integer season) {
+        int targetSeason = resolveSeason(season);
+        String sql = """
+                WITH driver_stops AS (
+                    SELECT ps.race_id, ps.driver_id, MAX(ps.stop) as stops
+                    FROM pit_stops ps
+                    JOIN races ra ON ps.race_id = ra.race_id
+                    WHERE ra.year = ?
+                    GROUP BY ps.race_id, ps.driver_id
+                )
+                SELECT
+                    COALESCE(ds.stops, 0) as stops,
+                    COUNT(*) as total_finishers,
+                    SUM(CASE WHEN r.position = 1 THEN 1 ELSE 0 END) as wins,
+                    ROUND((100.0 * SUM(CASE WHEN r.position = 1 THEN 1 ELSE 0 END) / COUNT(*))::numeric, 2) as win_rate,
+                    SUM(CASE WHEN r.position <= 3 THEN 1 ELSE 0 END) as podiums,
+                    ROUND((100.0 * SUM(CASE WHEN r.position <= 3 THEN 1 ELSE 0 END) / COUNT(*))::numeric, 2) as podium_rate
+                FROM results r
+                JOIN races ra ON r.race_id = ra.race_id
+                LEFT JOIN driver_stops ds ON r.race_id = ds.race_id AND r.driver_id = ds.driver_id
+                WHERE ra.year = ? AND r.position IS NOT NULL
+                GROUP BY ds.stops
+                ORDER BY stops
+                """;
+        return jdbcTemplate.queryForList(sql, targetSeason, targetSeason);
     }
 
     // ===========================================
@@ -490,5 +567,126 @@ public class AnalyticsController {
                 GROUP BY driver1, driver2
                 """;
         return jdbcTemplate.queryForList(sql, driver1Id, driver2Id, driver1Id, driver2Id);
+    }
+
+    /**
+     * Lap Time Consistency - Standard Deviation of lap times (lower is better)
+     */
+    @GetMapping("/lap-consistency")
+    public List<Map<String, Object>> getLapConsistency(@RequestParam(required = false) Integer season) {
+        int targetSeason = resolveSeason(season);
+        String sql = """
+                SELECT d.forename || ' ' || d.surname as driver,
+                       c.name as constructor,
+                       ROUND(STDDEV(lt.milliseconds)::numeric / 1000, 3) as deviation,
+                       ROUND(AVG(lt.milliseconds)::numeric / 1000, 3) as avg_lap_time
+                FROM lap_times lt
+                JOIN races r ON lt.race_id = r.race_id
+                JOIN drivers d ON lt.driver_id = d.driver_id
+                JOIN results res ON r.race_id = res.race_id AND d.driver_id = res.driver_id
+                JOIN constructors c ON res.constructor_id = c.constructor_id
+                WHERE r.year = ? AND lt.milliseconds < 100000 -- Filter distinct outliers > 1m40s (approx, varies by track)
+                AND res.status_id = 1 -- Only count finished races to avoid crash laps skewing data
+                GROUP BY d.driver_id, d.forename, d.surname, c.name
+                HAVING COUNT(*) > 100 -- Minimum sample size
+                ORDER BY deviation ASC
+                LIMIT 20
+                """;
+        return jdbcTemplate.queryForList(sql, targetSeason);
+    }
+
+    /**
+     * Race Pace Gap - Average deficit to the winner's race pace
+     */
+    @GetMapping("/race-pace-gap")
+    public List<Map<String, Object>> getRacePaceGap(@RequestParam(required = false) Integer season) {
+        int targetSeason = resolveSeason(season);
+        String sql = """
+                WITH RaceWinners AS (
+                    SELECT r.race_id, AVG(lt.milliseconds) as winner_avg_pace
+                    FROM lap_times lt
+                    JOIN results res ON lt.race_id = res.race_id AND lt.driver_id = res.driver_id
+                    JOIN races r ON lt.race_id = r.race_id
+                    WHERE r.year = ? AND res.position = 1 AND lt.milliseconds < 100000 -- Filter pit stops
+                    GROUP BY r.race_id
+                ),
+                DriverPace AS (
+                    SELECT lt.race_id, lt.driver_id, AVG(lt.milliseconds) as driver_avg_pace
+                    FROM lap_times lt
+                    JOIN races r ON lt.race_id = r.race_id
+                    JOIN results res ON lt.race_id = res.race_id AND lt.driver_id = res.driver_id
+                    WHERE r.year = ? AND res.status_id = 1 AND lt.milliseconds < 100000 -- Filter pit stops
+                    GROUP BY lt.race_id, lt.driver_id
+                )
+                SELECT d.forename || ' ' || d.surname as driver,
+                       c.name as constructor,
+                       ROUND(AVG((dp.driver_avg_pace - rw.winner_avg_pace) / 1000)::numeric, 3) as avg_gap_to_winner
+                FROM DriverPace dp
+                JOIN RaceWinners rw ON dp.race_id = rw.race_id
+                JOIN drivers d ON dp.driver_id = d.driver_id
+                JOIN results res ON dp.race_id = res.race_id AND dp.driver_id = res.driver_id
+                JOIN constructors c ON res.constructor_id = c.constructor_id
+                GROUP BY d.driver_id, d.forename, d.surname, c.name
+                HAVING COUNT(*) >= 5 -- Participated in at least 5 races
+                ORDER BY avg_gap_to_winner ASC
+                LIMIT 20
+                """;
+        return jdbcTemplate.queryForList(sql, targetSeason, targetSeason);
+    }
+
+    /**
+     * Championship Momentum - Season stats with trend indicator
+     */
+    @GetMapping("/championship-momentum")
+    public List<Map<String, Object>> getChampionshipMomentum(@RequestParam(required = false) Integer season) {
+        Integer targetSeason = resolveSeason(season);
+        String sql = """
+                SELECT
+                    CONCAT(d.forename, ' ', d.surname) AS driver,
+                    d.code,
+                    ROUND(CAST(AVG(res.points) AS numeric), 2) AS season_avg_points,
+                    COUNT(*) AS total_races,
+                    SUM(res.points) AS total_points,
+                    MAX(r.round) AS last_round,
+                    'STABLE' AS trend,
+                    ROUND(CAST(AVG(res.points) AS numeric) - 10, 2) AS momentum
+                FROM results res
+                JOIN drivers d ON res.driver_id = d.driver_id
+                JOIN races r ON res.race_id = r.race_id
+                WHERE r.year = ?
+                GROUP BY d.driver_id, d.forename, d.surname, d.code
+                HAVING COUNT(*) >= 5 AND SUM(res.points) > 0
+                ORDER BY total_points DESC
+                LIMIT 15
+                """;
+        return jdbcTemplate.queryForList(sql, targetSeason);
+    }
+
+    /**
+     * Season Dominance - How much each driver is dominating the season
+     */
+    @GetMapping("/season-dominance")
+    public List<Map<String, Object>> getSeasonDominance(@RequestParam(required = false) Integer season) {
+        Integer targetSeason = resolveSeason(season);
+        String sql = """
+                SELECT
+                    CONCAT(d.forename, ' ', d.surname) AS driver,
+                    d.code,
+                    SUM(res.points) AS total_points,
+                    COUNT(CASE WHEN res.position = 1 THEN 1 END) AS wins,
+                    COUNT(CASE WHEN res.position <= 3 THEN 1 END) AS podiums,
+                    COUNT(*) AS races,
+                    ROUND(CAST(SUM(res.points) * 100.0 / NULLIF(SUM(SUM(res.points)) OVER (), 0) AS numeric), 2) AS points_share,
+                    ROUND(CAST(COUNT(CASE WHEN res.position = 1 THEN 1 END) * 100.0 / NULLIF(SUM(COUNT(CASE WHEN res.position = 1 THEN 1 END)) OVER (), 0) AS numeric), 2) AS win_rate
+                FROM results res
+                JOIN drivers d ON res.driver_id = d.driver_id
+                JOIN races r ON res.race_id = r.race_id
+                WHERE r.year = ?
+                GROUP BY d.driver_id, d.forename, d.surname, d.code
+                HAVING SUM(res.points) > 0
+                ORDER BY total_points DESC
+                LIMIT 15
+                """;
+        return jdbcTemplate.queryForList(sql, targetSeason);
     }
 }

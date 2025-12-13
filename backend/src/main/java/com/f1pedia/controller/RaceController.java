@@ -10,7 +10,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/races")
-@CrossOrigin(origins = "http://localhost:5173")
 public class RaceController {
 
     @Autowired
@@ -31,5 +30,17 @@ public class RaceController {
         return raceRepository.findById(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
+    }
+
+    /**
+     * Get the latest season year from the database.
+     * Used by frontend to default to current season instead of hardcoded values.
+     */
+    @GetMapping("/latest-season")
+    public Integer getLatestSeason() {
+        return raceRepository.findAll().stream()
+                .map(Race::getYear)
+                .max(Integer::compareTo)
+                .orElse(java.time.Year.now().getValue());
     }
 }

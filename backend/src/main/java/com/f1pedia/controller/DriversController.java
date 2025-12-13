@@ -11,7 +11,6 @@ import java.util.*;
 
 @RestController
 @RequestMapping("/api/drivers")
-@CrossOrigin(origins = "http://localhost:5173")
 public class DriversController {
 
     @Autowired
@@ -23,6 +22,38 @@ public class DriversController {
     @GetMapping
     public List<Driver> getAllDrivers() {
         return driverRepository.findAll();
+    }
+
+    /**
+     * Get driver statistics for head-to-head comparisons.
+     * Returns aggregated stats for all drivers with significant race history.
+     */
+    @GetMapping("/stats")
+    public List<Map<String, Object>> getDriverStats() {
+        String sql = """
+                SELECT
+                    d.driver_id as driverId,
+                    d.forename || ' ' || d.surname as name,
+                    d.code,
+                    d.nationality,
+                    COUNT(DISTINCT r.race_id) as races,
+                    COUNT(CASE WHEN r.position = 1 THEN 1 END) as wins,
+                    COUNT(CASE WHEN r.grid = 1 THEN 1 END) as poles,
+                    COUNT(CASE WHEN r.position <= 3 THEN 1 END) as podiums,
+                    ROUND(100.0 * COUNT(CASE WHEN r.position = 1 THEN 1 END) / COUNT(*), 2) as win_rate,
+                    ROUND(100.0 * COUNT(CASE WHEN r.grid = 1 THEN 1 END) / COUNT(*), 2) as pole_rate,
+                    ROUND(100.0 * COUNT(CASE WHEN s.status != 'Finished' AND s.status NOT LIKE '+%' THEN 1 END) / COUNT(*), 2) as dnf_rate,
+                    COUNT(DISTINCT ra.year) as seasons
+                FROM drivers d
+                JOIN results r ON d.driver_id = r.driver_id
+                JOIN races ra ON r.race_id = ra.race_id
+                JOIN status s ON r.status_id = s.status_id
+                GROUP BY d.driver_id, d.forename, d.surname, d.code, d.nationality
+                HAVING COUNT(DISTINCT r.race_id) >= 20
+                ORDER BY wins DESC, podiums DESC
+                LIMIT 100
+                """;
+        return jdbcTemplate.queryForList(sql);
     }
 
     @GetMapping("/{id}")

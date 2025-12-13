@@ -43,9 +43,6 @@ export default function Navbar() {
             animate={{ y: 0 }}
             transition={{ duration: 0.5 }}
         >
-            {/* Racing stripe top */}
-            <div className={`h-1 bg-gradient-to-r from-f1-red via-orange-500 to-f1-red transition-opacity duration-300 ${isHome && !scrolled ? 'opacity-0' : 'opacity-100'
-                }`}></div>
 
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex items-center justify-between h-16">
@@ -70,7 +67,8 @@ export default function Navbar() {
                     {/* Mobile Menu Button */}
                     <button
                         onClick={() => setIsOpen(!isOpen)}
-                        className="md:hidden z-50 p-2 text-white hover:text-f1-red transition-colors"
+                        className="md:hidden z-50 p-3 -m-1 text-white hover:text-f1-red transition-colors"
+                        aria-label={isOpen ? "Close menu" : "Open menu"}
                     >
                         <div className="flex flex-col gap-1.5 w-6">
                             <motion.div

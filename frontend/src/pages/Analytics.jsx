@@ -3,7 +3,9 @@ import { motion } from 'framer-motion';
 import {
     getDNFCauses, getPitStopEfficiency, getPoleToWin, getGridPerformance,
     getQualifyingProgression, getFastestLaps, getTeammateBattles, getPointsEfficiency,
-    getChampionshipBattle, getConstructorTrends, getConstructorChampionship, getCircuitReliability
+    getChampionshipBattle, getConstructorTrends, getConstructorChampionship, getCircuitReliability,
+    getPitStopTeamEfficiency, getPitStrategyStats, getLapConsistency, getRacePaceGap,
+    getChampionshipMomentum, getSeasonDominance
 } from '../services/api';
 import {
     PieChart, Pie, Cell, Tooltip, ResponsiveContainer, BarChart, Bar, XAxis, YAxis,
@@ -36,6 +38,12 @@ export default function Analytics() {
     const [constructorChampData, setConstructorChampData] = useState([]);
     const [gapToLeaderData, setGapToLeaderData] = useState([]);
     const [circuitReliability, setCircuitReliability] = useState([]);
+    const [pitStopTeamEfficiency, setPitStopTeamEfficiency] = useState([]);
+    const [pitStrategyStats, setPitStrategyStats] = useState([]);
+    const [lapConsistency, setLapConsistency] = useState([]);
+    const [racePaceGap, setRacePaceGap] = useState([]);
+    const [championshipMomentum, setChampionshipMomentum] = useState([]);
+    const [seasonDominance, setSeasonDominance] = useState([]);
 
     useEffect(() => {
         loadData();
@@ -45,7 +53,8 @@ export default function Analytics() {
         setLoading(true);
         try {
             const [
-                poleRes, gridRes, qualiRes, flRes, tmRes, peRes, dnfRes, pitRes, champRes, constTrendsRes, constChampRes, circuitRelRes
+                poleRes, gridRes, qualiRes, flRes, tmRes, peRes, dnfRes, pitRes, champRes, constTrendsRes, constChampRes, circuitRelRes,
+                pitTeamEffRes, pitStrategyStatsRes, lapConsistencyRes, racePaceGapRes, momentumRes, dominanceRes
             ] = await Promise.all([
                 getPoleToWin(),
                 getGridPerformance(selectedSeason),
@@ -58,7 +67,13 @@ export default function Analytics() {
                 getChampionshipBattle(selectedSeason),
                 getConstructorTrends(),
                 getConstructorChampionship(selectedSeason),
-                getCircuitReliability()
+                getCircuitReliability(),
+                getPitStopTeamEfficiency(selectedSeason),
+                getPitStrategyStats(selectedSeason),
+                getLapConsistency(selectedSeason),
+                getRacePaceGap(selectedSeason),
+                getChampionshipMomentum(selectedSeason),
+                getSeasonDominance(selectedSeason)
             ]);
 
             setPoleToWin(poleRes.data);
@@ -114,6 +129,16 @@ export default function Analytics() {
             // Circuit Reliability
             setCircuitReliability(circuitRelRes.data.slice(0, 15)); // Top 15 worst tracks
 
+            // Pit Strategy Data
+            setPitStopTeamEfficiency(pitTeamEffRes.data);
+            setPitStrategyStats(pitStrategyStatsRes.data);
+            setLapConsistency(lapConsistencyRes.data);
+            setRacePaceGap(racePaceGapRes.data);
+
+            // Championship Prediction Data
+            setChampionshipMomentum(momentumRes.data);
+            setSeasonDominance(dominanceRes.data);
+
             // Calculate Gap to Leader (Championship Tab)
             if (topDrivers.length > 0) {
                 const leaderData = topDrivers[0][1]; // Assuming sorted by points
@@ -146,7 +171,7 @@ export default function Analytics() {
     if (loading) return (
         <div className="min-h-screen bg-black flex items-center justify-center">
             <div className="text-center">
-                <Loader2 className="animate-spin h-12 w-12 text-f1-red mx-auto mb-4" />
+                <Loader2 className="animate-spin h-12 w-12 text-f1-red mx-auto mb-4" aria-label="Loading analytics" role="status" />
                 <p className="text-gray-500 font-mono text-sm">Loading F1 analytics...</p>
             </div>
         </div>
@@ -166,7 +191,10 @@ export default function Analytics() {
         { id: 'qualifying', label: 'Qualifying', icon: <Timer className="w-4 h-4" /> },
         { id: 'race', label: 'Race Pace', icon: <Zap className="w-4 h-4" /> },
         { id: 'championship', label: 'Championship', icon: <Trophy className="w-4 h-4" /> },
+        { id: 'predictions', label: 'Predictions', icon: <TrendingUp className="w-4 h-4" /> },
         { id: 'teams', label: 'Teams', icon: <Users className="w-4 h-4" /> },
+        { id: 'lap-analysis', label: 'Lap Analysis', icon: <Timer className="w-4 h-4" /> },
+        { id: 'pit-strategy', label: 'Pit Strategy', icon: <Timer className="w-4 h-4" /> },
         { id: 'reliability', label: 'Reliability', icon: <Target className="w-4 h-4" /> },
     ];
 
@@ -194,13 +222,14 @@ export default function Analytics() {
 
                         {/* Season Selector - Hidden for Head-to-Head (Career Stats) */}
                         {activeTab !== 'head-to-head' && (
-                            <div className="flex items-center gap-3 bg-gray-900 px-4 py-2 border border-gray-700">
+                            <div className="flex items-center gap-3 bg-gray-900 px-5 py-3 border border-gray-700 rounded">
                                 <Flag className="w-5 h-5 text-f1-red" />
-                                <span className="text-gray-400 font-mono text-sm">SEASON</span>
+                                <span className="text-gray-400 font-mono text-sm hidden sm:inline">SEASON</span>
                                 <select
                                     value={selectedSeason}
                                     onChange={(e) => setSelectedSeason(Number(e.target.value))}
-                                    className="bg-black text-white border-none font-racing text-2xl focus:outline-none cursor-pointer"
+                                    className="bg-black text-white border border-gray-700 rounded px-3 py-1 font-racing text-xl focus:outline-none focus:border-f1-red cursor-pointer min-w-[100px]"
+                                    aria-label="Select season"
                                 >
                                     {[2024, 2023, 2022, 2021, 2020, 2019, 2018].map(year => (
                                         <option key={year} value={year}>{year}</option>
@@ -211,20 +240,24 @@ export default function Analytics() {
                     </div>
 
                     {/* Tab Navigation */}
-                    <div className="flex gap-2 mt-6 overflow-x-auto pb-2">
-                        {tabs.map(tab => (
-                            <button
-                                key={tab.id}
-                                onClick={() => setActiveTab(tab.id)}
-                                className={`flex items-center gap-2 px-4 py-2 font-racing uppercase tracking-wider text-sm whitespace-nowrap transition-all ${activeTab === tab.id
-                                    ? 'bg-f1-red text-white'
-                                    : 'bg-gray-900 text-gray-400 hover:text-white border border-gray-700'
-                                    }`}
-                            >
-                                {tab.icon}
-                                {tab.label}
-                            </button>
-                        ))}
+                    <div className="relative mt-6">
+                        <div className="flex gap-2 overflow-x-auto pb-3 custom-scrollbar">
+                            {tabs.map(tab => (
+                                <button
+                                    key={tab.id}
+                                    onClick={() => setActiveTab(tab.id)}
+                                    className={`flex items-center gap-2 px-4 py-2 font-racing uppercase tracking-wider text-sm whitespace-nowrap transition-all ${activeTab === tab.id
+                                        ? 'bg-f1-red text-white'
+                                        : 'bg-gray-900 text-gray-400 hover:text-white border border-gray-700'
+                                        }`}
+                                >
+                                    {tab.icon}
+                                    {tab.label}
+                                </button>
+                            ))}
+                        </div>
+                        {/* Scroll fade indicator */}
+                        <div className="absolute right-0 top-0 bottom-2 w-8 bg-gradient-to-l from-gray-900 to-transparent pointer-events-none md:hidden" />
                     </div>
                 </div>
             </div>
@@ -440,6 +473,115 @@ export default function Analytics() {
                     </div>
                 )}
 
+                {activeTab === 'predictions' && (
+                    <div className="space-y-8">
+                        {(!championshipMomentum || championshipMomentum.length === 0) && (!seasonDominance || seasonDominance.length === 0) ? (
+                            <div className="text-center py-12">
+                                <p className="text-gray-500 font-mono">No prediction data available for {selectedSeason}</p>
+                            </div>
+                        ) : (
+                            <>
+                                {/* Championship Momentum */}
+                                <AnalyticsCard title="Championship Momentum" icon={<TrendingUp />} subtitle={`${selectedSeason} • Last 5 Races Avg vs Season Avg (positive = improving)`}>
+                                    <div className="w-full h-[350px] md:h-[400px]">
+                                        <ResponsiveContainer width="100%" height="100%">
+                                            <BarChart data={championshipMomentum} layout="vertical" margin={{ left: 20, right: 30 }}>
+                                                <CartesianGrid strokeDasharray="3 3" stroke="#333" />
+                                                <XAxis
+                                                    type="number"
+                                                    stroke="#666"
+                                                    tickFormatter={v => v > 0 ? `+${v}` : v}
+                                                    domain={['dataMin', 'dataMax']}
+                                                />
+                                                <YAxis type="category" dataKey="driver" stroke="#666" tick={{ fill: '#fff', fontSize: 10 }} width={140} />
+                                                <Tooltip
+                                                    contentStyle={{ backgroundColor: '#1a1a1a', border: '1px solid #E10600' }}
+                                                    formatter={(v, name) => [
+                                                        v > 0 ? `+${v} pts/race` : `${v} pts/race`,
+                                                        'Momentum'
+                                                    ]}
+                                                />
+                                                <Bar
+                                                    dataKey="momentum"
+                                                    name="Momentum"
+                                                    radius={[0, 4, 4, 0]}
+                                                    label={({ x, y, width, height, value, index }) => {
+                                                        const trend = championshipMomentum[index]?.trend;
+                                                        return (
+                                                            <text
+                                                                x={x + width + 5}
+                                                                y={y + height / 2}
+                                                                fill={trend === 'RISING' ? '#6BCB77' : trend === 'FALLING' ? '#E10600' : '#999'}
+                                                                fontSize={10}
+                                                                dominantBaseline="middle"
+                                                            >
+                                                                {trend === 'RISING' ? '↑' : trend === 'FALLING' ? '↓' : '→'}
+                                                            </text>
+                                                        );
+                                                    }}
+                                                >
+                                                    {championshipMomentum.map((entry, index) => (
+                                                        <Cell
+                                                            key={`cell-${index}`}
+                                                            fill={entry.momentum >= 0 ? '#6BCB77' : '#E10600'}
+                                                        />
+                                                    ))}
+                                                </Bar>
+                                            </BarChart>
+                                        </ResponsiveContainer>
+                                    </div>
+                                </AnalyticsCard>
+
+                                {/* Season Dominance */}
+                                <AnalyticsCard title="Season Dominance" icon={<Trophy />} subtitle={`${selectedSeason} • Percentage of total season points and wins`}>
+                                    <div className="w-full h-[350px] md:h-[400px]">
+                                        <ResponsiveContainer width="100%" height="100%">
+                                            <BarChart data={seasonDominance} margin={{ bottom: 60 }}>
+                                                <CartesianGrid strokeDasharray="3 3" stroke="#333" />
+                                                <XAxis dataKey="driver" stroke="#666" tick={{ fill: '#fff', fontSize: 10 }} angle={-45} textAnchor="end" height={80} />
+                                                <YAxis stroke="#666" label={{ value: '%', angle: -90, position: 'insideLeft', fill: '#666' }} />
+                                                <Tooltip
+                                                    contentStyle={{ backgroundColor: '#1a1a1a', border: '1px solid #E10600' }}
+                                                    formatter={(v, name) => [`${v}%`, name]}
+                                                />
+                                                <Legend />
+                                                <Bar dataKey="points_share" fill="#FFD93D" name="Points Share %" radius={[4, 4, 0, 0]} />
+                                                <Bar dataKey="win_rate" fill="#E10600" name="Win Rate %" radius={[4, 4, 0, 0]} />
+                                            </BarChart>
+                                        </ResponsiveContainer>
+                                    </div>
+                                </AnalyticsCard>
+
+                                {/* Quick Stats Grid */}
+                                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                    {seasonDominance.slice(0, 3).map((driver, idx) => (
+                                        <div key={idx} className={`bg-gray-900 border-t-4 ${idx === 0 ? 'border-yellow-500' : idx === 1 ? 'border-gray-400' : 'border-orange-600'} p-6`}>
+                                            <div className="flex items-center justify-between mb-4">
+                                                <span className="text-2xl font-racing text-white">{driver.code || driver.driver?.split(' ').pop()}</span>
+                                                <span className="text-xs font-mono text-gray-500">P{idx + 1}</span>
+                                            </div>
+                                            <div className="grid grid-cols-3 gap-2 text-center text-sm">
+                                                <div>
+                                                    <div className="text-f1-red font-racing text-2xl">{driver.total_points}</div>
+                                                    <div className="text-gray-500 text-xs">Points</div>
+                                                </div>
+                                                <div>
+                                                    <div className="text-yellow-500 font-racing text-2xl">{driver.wins}</div>
+                                                    <div className="text-gray-500 text-xs">Wins</div>
+                                                </div>
+                                                <div>
+                                                    <div className="text-orange-400 font-racing text-2xl">{driver.podiums}</div>
+                                                    <div className="text-gray-500 text-xs">Podiums</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                            </>
+                        )}
+                    </div>
+                )}
+
                 {activeTab === 'teams' && (
                     <div className="space-y-8">
                         {/* Pit Stop Performance */}
@@ -602,6 +744,120 @@ export default function Analytics() {
                                         <Bar dataKey="dnf_rate" fill="#FFD93D" name="DNF Rate" radius={[0, 4, 4, 0]} />
                                     </BarChart>
                                 </ResponsiveContainer>
+                            </div>
+                        </AnalyticsCard>
+                    </div>
+                )}
+
+                {activeTab === 'lap-analysis' && (
+                    <div className="space-y-8">
+                        {/* Lap Consistency */}
+                        <AnalyticsCard title="Lap Time Consistency" icon={<Timer />} subtitle={`${selectedSeason} • Std Deviation of Lap Times (Lower = More Consistent)`}>
+                            <div className="w-full h-[350px] md:h-[400px]">
+                                <ResponsiveContainer width="100%" height="100%">
+                                    <BarChart data={lapConsistency} margin={{ bottom: 20 }}>
+                                        <CartesianGrid strokeDasharray="3 3" stroke="#333" />
+                                        <XAxis dataKey="driver" stroke="#666" tick={{ fill: '#fff', fontSize: 9 }} angle={-45} textAnchor="end" height={100} interval={0} />
+                                        <YAxis stroke="#666" label={{ value: 'Dev (s)', angle: -90, position: 'insideLeft', fill: '#666' }} />
+                                        <Tooltip
+                                            contentStyle={{ backgroundColor: '#1a1a1a', border: '1px solid #E10600' }}
+                                            formatter={v => [`${v}s`, 'Deviation']}
+                                        />
+                                        <Bar dataKey="deviation" fill="#6BCB77" name="Standard Deviation" radius={[4, 4, 0, 0]} />
+                                    </BarChart>
+                                </ResponsiveContainer>
+                            </div>
+                        </AnalyticsCard>
+
+                        {/* Race Pace Gap */}
+                        <AnalyticsCard title="Race Pace Deficit" icon={<TrendingUp />} subtitle={`${selectedSeason} • Average Time Lost to Race Winner (seconds)`}>
+                            <div className="w-full h-[350px] md:h-[400px]">
+                                <ResponsiveContainer width="100%" height="100%">
+                                    <BarChart data={racePaceGap} layout="vertical" margin={{ left: 100 }}>
+                                        <CartesianGrid strokeDasharray="3 3" stroke="#333" />
+                                        <XAxis type="number" stroke="#666" tickFormatter={v => `+${v}s`} />
+                                        <YAxis type="category" dataKey="driver" stroke="#666" tick={{ fill: '#fff', fontSize: 11 }} />
+                                        <Tooltip
+                                            contentStyle={{ backgroundColor: '#1a1a1a', border: '1px solid #E10600' }}
+                                            formatter={v => [`+${v}s`, 'Avg Gap per Race']}
+                                        />
+                                        <Bar dataKey="avg_gap_to_winner" fill="#FFD93D" name="Avg Gap to Winner" radius={[0, 4, 4, 0]} />
+                                    </BarChart>
+                                </ResponsiveContainer>
+                            </div>
+                        </AnalyticsCard>
+                    </div>
+                )}
+
+                {activeTab === 'pit-strategy' && (
+                    <div className="space-y-8">
+                        {/* Pit Stop Team Efficiency */}
+                        <AnalyticsCard title="Team Pit Stop Efficiency" icon={<Timer />} subtitle={`${selectedSeason} - Speed & Consistency`}>
+                            <div className="w-full h-[350px] md:h-[400px]">
+                                <ResponsiveContainer width="100%" height="100%">
+                                    <BarChart data={pitStopTeamEfficiency} margin={{ bottom: 40 }}>
+                                        <CartesianGrid strokeDasharray="3 3" stroke="#333" />
+                                        <XAxis dataKey="constructor" stroke="#666" tick={{ fill: '#fff', fontSize: 10 }} angle={-45} textAnchor="end" />
+                                        <YAxis stroke="#666" label={{ value: 'Seconds', angle: -90, position: 'insideLeft', fill: '#666' }} />
+                                        <Tooltip
+                                            contentStyle={{ backgroundColor: '#1a1a1a', border: '1px solid #E10600' }}
+                                            labelStyle={{ color: '#fff' }}
+                                        />
+                                        <Legend />
+                                        <Bar dataKey="avg_duration" fill="#4D96FF" name="Avg Duration (s)" radius={[4, 4, 0, 0]} />
+                                        <Bar dataKey="min_duration" fill="#E10600" name="Best Stop (s)" radius={[4, 4, 0, 0]} />
+                                    </BarChart>
+                                </ResponsiveContainer>
+                            </div>
+                        </AnalyticsCard>
+
+                        {/* Winning Strategy Analysis */}
+                        <AnalyticsCard title="Winning Pit Strategies" icon={<Target />} subtitle={`${selectedSeason} • Distribution of Winning Pit Stop Strategies`}>
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                                <div className="w-full h-[300px]">
+                                    <ResponsiveContainer width="100%" height="100%">
+                                        <PieChart>
+                                            <Pie
+                                                data={pitStrategyStats}
+                                                dataKey="wins"
+                                                nameKey="stops"
+                                                cx="50%"
+                                                cy="50%"
+                                                innerRadius={60}
+                                                outerRadius={100}
+                                                label={({ stops, percent }) => `${stops} Stop (${(percent * 100).toFixed(0)}%)`}
+                                            >
+                                                {pitStrategyStats.map((entry, index) => (
+                                                    <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                                                ))}
+                                            </Pie>
+                                            <Tooltip contentStyle={{ backgroundColor: '#1a1a1a', border: '1px solid #E10600' }} />
+                                        </PieChart>
+                                    </ResponsiveContainer>
+                                </div>
+
+                                <div className="overflow-x-auto">
+                                    <table className="w-full text-sm">
+                                        <thead>
+                                            <tr className="border-b border-gray-700 text-gray-500 font-mono text-xs uppercase">
+                                                <th className="text-left py-3 px-2">Stops</th>
+                                                <th className="text-center py-3 px-2">Wins</th>
+                                                <th className="text-center py-3 px-2">Win %</th>
+                                                <th className="text-center py-3 px-2">Podiums</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {pitStrategyStats.map((row, idx) => (
+                                                <tr key={idx} className="border-b border-gray-800 hover:bg-gray-900">
+                                                    <td className="py-3 px-2 text-white font-racing">{row.stops} Stop(s)</td>
+                                                    <td className="py-3 px-2 text-center text-yellow-500 font-bold">{row.wins}</td>
+                                                    <td className="py-3 px-2 text-center text-green-500">{row.win_rate}%</td>
+                                                    <td className="py-3 px-2 text-center text-white">{row.podiums}</td>
+                                                </tr>
+                                            ))}
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         </AnalyticsCard>
                     </div>

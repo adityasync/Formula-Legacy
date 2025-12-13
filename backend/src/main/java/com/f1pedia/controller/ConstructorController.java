@@ -10,7 +10,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/constructors")
-@CrossOrigin(origins = "http://localhost:5173")
 public class ConstructorController {
 
     @Autowired

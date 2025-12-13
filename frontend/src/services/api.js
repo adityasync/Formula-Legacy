@@ -5,7 +5,74 @@ const api = axios.create({
     headers: {
         'Content-Type': 'application/json',
     },
+    timeout: 30000, // 30 second timeout
 });
+
+// Response interceptor for global error handling
+api.interceptors.response.use(
+    (response) => response,
+    (error) => {
+        // Create user-friendly error messages
+        let errorMessage = 'An unexpected error occurred';
+
+        if (error.response) {
+            // Server responded with error status
+            switch (error.response.status) {
+                case 400:
+                    errorMessage = 'Invalid request. Please check your input.';
+                    break;
+                case 401:
+                    errorMessage = 'Session expired. Please refresh the page.';
+                    break;
+                case 403:
+                    errorMessage = 'Access denied.';
+                    break;
+                case 404:
+                    errorMessage = 'The requested data was not found.';
+                    break;
+                case 500:
+                    errorMessage = 'Server error. Please try again later.';
+                    break;
+                case 503:
+                    errorMessage = 'Service temporarily unavailable. Please try again.';
+                    break;
+                default:
+                    errorMessage = `Server error (${error.response.status})`;
+            }
+        } else if (error.request) {
+            // Request made but no response received
+            errorMessage = 'Unable to connect to server. Please check your connection.';
+        } else if (error.code === 'ECONNABORTED') {
+            errorMessage = 'Request timed out. Please try again.';
+        }
+
+        // Attach user-friendly message to error object
+        error.userMessage = errorMessage;
+
+        // Log for debugging (can be sent to monitoring service)
+        console.error('[API Error]', {
+            url: error.config?.url,
+            status: error.response?.status,
+            message: errorMessage
+        });
+
+        return Promise.reject(error);
+    }
+);
+
+// Helper to get latest season (cached for performance)
+let cachedLatestSeason = null;
+export const getLatestSeason = async () => {
+    if (cachedLatestSeason) return cachedLatestSeason;
+    try {
+        const res = await api.get('/races/latest-season');
+        cachedLatestSeason = res.data;
+        return cachedLatestSeason;
+    } catch {
+        // Fallback to current year if endpoint fails
+        return new Date().getFullYear();
+    }
+};
 
 export const getDrivers = () => api.get('/drivers');
 export const getConstructors = () => api.get('/constructors');
@@ -21,15 +88,15 @@ export const getRaces = (year) => {
 export const getDNFCauses = () => api.get('/analytics/dnf-causes');
 export const getPoleToWin = () => api.get('/analytics/pole-to-win');
 export const getHeadToHeadLive = (d1, d2) => api.get(`/analytics/head-to-head?driver1Id=${d1}&driver2Id=${d2}`);
-// Keeping the static head-to-head for the main view if needed, but the controller supports specific battles.
-// The frontend currently uses a large static JSON for the spider chart. 
-// Let's stick to the pattern:
-export const getHeadToHead = () => axios.get('/data/head_to_head.json'); // Still useful for the "Select Driver" list? 
-// No, looking at HeadToHead.jsx, it loads the JSON to get the LIST of drivers and their stats. 
-// The backend /head-to-head is for a specific pair. 
-// For now, I will map the analytics tab charts to the backend.
+// Driver stats for HeadToHead comparison - now using backend endpoint
+export const getDriverStats = () => api.get('/drivers/stats');
+export const getHeadToHead = () => api.get('/drivers/stats'); // Replaced static JSON with backend API
 
 export const getPitStopEfficiency = (season) => api.get(`/analytics/pit-stops?season=${season}`);
+export const getPitStopTeamEfficiency = (season) => api.get(`/analytics/pit-stop-team-efficiency?season=${season}`);
+export const getPitStrategyStats = (season) => api.get(`/analytics/pit-strategy-stats?season=${season}`);
+export const getLapConsistency = (season) => api.get(`/analytics/lap-consistency?season=${season}`);
+export const getRacePaceGap = (season) => api.get(`/analytics/race-pace-gap?season=${season}`);
 export const getQualifyingProgression = (season) => api.get(`/analytics/qualifying-progression?season=${season}`);
 export const getFastestLaps = (season) => api.get(`/analytics/fastest-laps?season=${season}`);
 export const getTeammateBattles = (season) => api.get(`/analytics/teammate-battles?season=${season}`);
@@ -39,6 +106,8 @@ export const getChampionshipBattle = (season) => api.get(`/analytics/championshi
 export const getConstructorChampionship = (season) => api.get(`/analytics/constructor-championship?season=${season}`);
 export const getConstructorTrends = () => api.get('/analytics/constructor-trends');
 export const getCircuitReliability = () => api.get('/analytics/circuit-reliability');
+export const getChampionshipMomentum = (season) => api.get(`/analytics/championship-momentum?season=${season}`);
+export const getSeasonDominance = (season) => api.get(`/analytics/season-dominance?season=${season}`);
 
 
 // Driver Profile endpoints

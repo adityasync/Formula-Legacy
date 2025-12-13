@@ -30,8 +30,12 @@ export default function HeadToHead() {
     };
 
     const handleDriverChange = (setter, id) => {
-        const selected = drivers.find(d => d.driverId === id);
-        setter(selected);
+        // Convert id to number since select returns string but driverId is number
+        const numId = Number(id);
+        const selected = drivers.find(d => d.driverId === numId);
+        if (selected) {
+            setter(selected);
+        }
     };
 
     if (loading) return <div className="text-gray-500 font-mono">Loading data...</div>;
@@ -66,7 +70,7 @@ export default function HeadToHead() {
         <div className="space-y-8">
             {/* Controls */}
             {/* Controls */}
-            <div className="grid grid-cols-1 md:grid-cols-[1fr_auto_1fr] gap-8 bg-gray-900 p-6 border border-gray-800 items-center">
+            <div className="grid grid-cols-1 md:grid-cols-[1fr_auto_1fr] gap-4 md:gap-8 bg-gray-900 p-6 border border-gray-800 items-center">
                 <DriverSelector
                     label="Driver A"
                     drivers={drivers}
@@ -74,6 +78,19 @@ export default function HeadToHead() {
                     onChange={(id) => handleDriverChange(setDriver1, id)}
                     color="text-f1-red"
                 />
+
+                {/* Mobile VS indicator */}
+                <div className="flex md:hidden items-center justify-center py-2">
+                    <div className="flex items-center gap-4 w-full">
+                        <div className="flex-1 h-px bg-gradient-to-r from-transparent to-f1-red" />
+                        <div className="bg-gray-800 px-4 py-2 rounded-full">
+                            <span className="text-xl font-racing text-white">VS</span>
+                        </div>
+                        <div className="flex-1 h-px bg-gradient-to-l from-transparent to-blue-500" />
+                    </div>
+                </div>
+
+                {/* Desktop VS badge */}
                 <div className="hidden md:flex items-center justify-center">
                     <div className="bg-gray-800 p-4 rounded-full">
                         <span className="text-2xl font-racing text-white">VS</span>

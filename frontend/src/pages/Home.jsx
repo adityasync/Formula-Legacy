@@ -145,7 +145,7 @@ export default function Home() {
                     </motion.p>
 
                     <motion.div
-                        className="flex flex-wrap justify-center gap-6 mb-16"
+                        className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-16 max-w-3xl mx-auto"
                         initial={{ opacity: 0, y: 20 }}
                         animate={loaded ? { opacity: 1, y: 0 } : {}}
                         transition={{ duration: 0.8, delay: 1.4 }}
@@ -158,10 +158,10 @@ export default function Home() {
                         ].map((stat, i) => (
                             <motion.div
                                 key={i}
-                                className="text-center px-8 py-4 bg-gray-900/50 border-l-4 border-f1-red"
+                                className="text-center px-4 py-4 bg-gray-900/50 border-l-4 border-f1-red"
                                 whileHover={{ scale: 1.05, backgroundColor: 'rgba(225,6,0,0.1)' }}
                             >
-                                <div className="text-4xl font-racing text-white tabular-nums">{stat.value}</div>
+                                <div className="text-3xl md:text-4xl font-racing text-white tabular-nums">{stat.value}</div>
                                 <div className="text-xs font-mono text-gray-500 tracking-widest">{stat.label}</div>
                             </motion.div>
                         ))}
@@ -307,7 +307,7 @@ export default function Home() {
 
                                 {/* Era card */}
                                 <motion.div
-                                    className={`w-full ml-12 md:ml-0 md:w-[45%] p-6 md:p-8 bg-gray-900/50 border border-gray-800 backdrop-blur-sm 
+                                    className={`w-full ml-10 md:ml-0 md:w-[45%] p-6 md:p-8 bg-gray-900/50 border border-gray-800 backdrop-blur-sm 
                                     ${i % 2 === 0 ? 'md:mr-auto md:text-right md:pr-16 text-left' : 'md:ml-auto md:text-left md:pl-16 text-left'}`}
                                     whileHover={{ borderColor: era.color, backgroundColor: `${era.color}10` }}
                                 >
@@ -481,15 +481,14 @@ export default function Home() {
             {/* ===== FOOTER ===== */}
             <footer className="relative py-24 px-6 border-t border-gray-900">
                 <div className="max-w-7xl mx-auto">
-                    {/* Full-width checkered flag banner */}
-                    <div className="absolute left-0 right-0 -top-4 flex">
-                        {[...Array(100)].map((_, i) => (
-                            <div key={i} className="flex flex-col flex-1">
-                                <div className={`h-4 ${i % 2 === 0 ? 'bg-white' : 'bg-black'}`} />
-                                <div className={`h-4 ${i % 2 === 0 ? 'bg-black' : 'bg-white'}`} />
-                            </div>
-                        ))}
-                    </div>
+                    {/* Full-width checkered flag banner - CSS pattern for performance */}
+                    <div
+                        className="absolute left-0 right-0 -top-4 h-8"
+                        style={{
+                            backgroundImage: `repeating-conic-gradient(#fff 0% 25%, #000 0% 50%)`,
+                            backgroundSize: '16px 16px'
+                        }}
+                    />
 
                     <div className="flex flex-col md:flex-row justify-between items-center gap-12">
                         <div>

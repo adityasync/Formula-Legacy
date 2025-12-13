@@ -25,7 +25,7 @@ export default function Circuits() {
 
     if (loading) return (
         <div className="min-h-screen bg-black flex items-center justify-center">
-            <Loader2 className="animate-spin h-12 w-12 text-f1-red" />
+            <Loader2 className="animate-spin h-12 w-12 text-f1-red" aria-label="Loading circuits" role="status" />
         </div>
     );
 

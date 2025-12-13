@@ -33,7 +33,7 @@ export default function DriverProfile() {
 
     if (loading) return (
         <div className="min-h-screen bg-black flex items-center justify-center">
-            <Loader2 className="animate-spin h-12 w-12 text-f1-red" />
+            <Loader2 className="animate-spin h-12 w-12 text-f1-red" aria-label="Loading" role="status" />
         </div>
     );
 
@@ -79,7 +79,7 @@ export default function DriverProfile() {
                         </div>
 
                         {/* Career Stats */}
-                        <div className="grid grid-cols-3 md:grid-cols-6 gap-4 text-center">
+                        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4 text-center">
                             <StatBadge value={career.races} label="Races" />
                             <StatBadge value={career.wins} label="Wins" color="text-yellow-500" />
                             <StatBadge value={career.podiums} label="Podiums" color="text-orange-400" />
@@ -96,8 +96,8 @@ export default function DriverProfile() {
                                 key={tab}
                                 onClick={() => setActiveTab(tab)}
                                 className={`px-4 py-2 font-racing uppercase text-sm ${activeTab === tab
-                                        ? 'bg-f1-red text-white'
-                                        : 'bg-gray-900 text-gray-400 hover:text-white'
+                                    ? 'bg-f1-red text-white'
+                                    : 'bg-gray-900 text-gray-400 hover:text-white'
                                     }`}
                             >
                                 {tab}

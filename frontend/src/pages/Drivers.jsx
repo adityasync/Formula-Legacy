@@ -32,7 +32,7 @@ export default function Drivers() {
     if (loading) return (
         <div className="min-h-screen bg-black flex items-center justify-center">
             <div className="text-center">
-                <Loader2 className="animate-spin h-12 w-12 text-f1-red mx-auto mb-4" />
+                <Loader2 className="animate-spin h-12 w-12 text-f1-red mx-auto mb-4" aria-label="Loading drivers" role="status" />
                 <p className="text-gray-500 font-mono text-sm">Loading drivers...</p>
             </div>
         </div>
@@ -116,7 +116,7 @@ export default function Drivers() {
                                 placeholder="Search Driver..."
                                 value={searchTerm}
                                 onChange={handleSearch}
-                                className="w-full md:w-64 bg-gray-800 border border-gray-700 text-white px-4 py-2 rounded focus:outline-none focus:border-f1-red font-mono text-sm uppercase placeholder-gray-500"
+                                className="w-full md:w-80 bg-gray-800 border border-gray-700 text-white px-4 py-2 rounded focus:outline-none focus:border-f1-red font-mono text-sm uppercase placeholder-gray-500"
                             />
                         </div>
                     </motion.div>
