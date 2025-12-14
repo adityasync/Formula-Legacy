@@ -24,8 +24,7 @@ export default function Home() {
     const containerRef = useRef(null);
     const horizontalRef = useRef(null);
 
-    const { scrollYProgress } = useScroll();
-    const smoothProgress = useSpring(scrollYProgress, { stiffness: 100, damping: 30 });
+
 
     useEffect(() => {
         // Quick simple timeout to show the "lights out" animation
@@ -82,14 +81,10 @@ export default function Home() {
                 )}
             </AnimatePresence>
 
-            {/* Progress Bar */}
-            <motion.div
-                className="fixed top-0 left-0 right-0 h-1 z-50 origin-left bg-gradient-to-r from-f1-red via-orange-500 to-yellow-500"
-                style={{ scaleX: smoothProgress }}
-            />
+
 
             {/* ===== HERO SECTION ===== */}
-            <section className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden">
+            <section className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden pt-20">
                 {/* Background effects */}
                 <div className="absolute inset-0">
                     <div className="absolute inset-0 opacity-[0.02]" style={{
