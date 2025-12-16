@@ -42,7 +42,7 @@ export default function SmartLoader({ message = "Loading Data..." }) {
     return (
         <div className="min-h-screen bg-black flex flex-col items-center justify-center p-4 relative overflow-hidden">
             {/* Background elements */}
-            <div className="absolute inset-0 bg-[linear-gradient(rgba(20,20,20,0.8),rgba(0,0,0,1)),url('/grid-bg.png')] bg-cover opacity-20 pointer-events-none" />
+            <div className="absolute inset-0 bg-[linear-gradient(rgba(20,20,20,0.8),rgba(0,0,0,1)),url('/grid-bg.svg')] bg-cover opacity-20 pointer-events-none" />
             <div className="absolute top-0 w-full h-1 bg-gradient-to-r from-f1-red via-transparent to-f1-red opacity-50" />
 
             <motion.div

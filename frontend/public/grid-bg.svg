@@ -1,0 +1,25 @@
+<svg width="400" height="400" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <pattern id="techGrid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <!-- Dark charcoal background -->
+      <rect width="40" height="40" fill="#0a0a0a"/>
+      
+      <!-- Subtle grid lines -->
+      <line x1="0" y1="0" x2="40" y2="0" stroke="#1a1a1a" stroke-width="0.5" opacity="0.6"/>
+      <line x1="0" y1="0" x2="0" y2="40" stroke="#1a1a1a" stroke-width="0.5" opacity="0.6"/>
+      
+      <!-- Faint accent lines -->
+      <line x1="20" y1="0" x2="20" y2="40" stroke="#151515" stroke-width="0.3" opacity="0.4"/>
+      <line x1="0" y1="20" x2="40" y2="20" stroke="#151515" stroke-width="0.3" opacity="0.4"/>
+      
+      <!-- Subtle corner dots for tech feel -->
+      <circle cx="0" cy="0" r="0.5" fill="#252525" opacity="0.5"/>
+      <circle cx="40" cy="0" r="0.5" fill="#252525" opacity="0.5"/>
+      <circle cx="0" cy="40" r="0.5" fill="#252525" opacity="0.5"/>
+      <circle cx="40" cy="40" r="0.5" fill="#252525" opacity="0.5"/>
+    </pattern>
+  </defs>
+  
+  <!-- Apply pattern -->
+  <rect width="400" height="400" fill="url(#techGrid)"/>
+</svg>

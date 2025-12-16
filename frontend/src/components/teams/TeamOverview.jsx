@@ -123,7 +123,7 @@ export default function TeamOverview({ team, driverStats, seasons, dashboardStat
                     <h3 className="text-lg font-racing text-f1-offwhite mb-4 flex items-center gap-2 border-b border-white/10 pb-2">
                         <PieChartIcon className="text-f1-red" size={20} /> Result Mix
                     </h3>
-                    <div className="flex-1 relative">
+                    <div className="flex-1 relative min-h-0">
                         <ResponsiveContainer width="100%" height="100%">
                             <PieChart>
                                 <Pie
@@ -157,7 +157,7 @@ export default function TeamOverview({ team, driverStats, seasons, dashboardStat
                     <h3 className="text-lg font-racing text-f1-offwhite mb-4 flex items-center gap-2 border-b border-white/10 pb-2">
                         <Globe className="text-cyan-400" size={20} /> Global Performance <span className="text-xs text-gray-500 font-sans normal-case ml-auto">Top Countries by Avg Pts</span>
                     </h3>
-                    <div className="flex-1">
+                    <div className="flex-1 relative min-h-0">
                         <ResponsiveContainer width="100%" height="100%">
                             <BarChart data={geoStats} layout="vertical" margin={{ left: 20 }}>
                                 <CartesianGrid strokeDasharray="3 3" horizontal={false} stroke="#333" />
