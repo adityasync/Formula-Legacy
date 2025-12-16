@@ -7,6 +7,7 @@ import TeamAnalytics from '../components/teams/TeamAnalytics';
 import TeamSeasons from '../components/teams/TeamSeasons';
 import TeamCircuits from '../components/teams/TeamCircuits';
 import TeamOverview from '../components/teams/TeamOverview';
+import SmartLoader from '../components/SmartLoader';
 
 export default function TeamDetails() {
     const { id, "*": tabParam } = useParams();
@@ -67,11 +68,7 @@ export default function TeamDetails() {
         fetchData();
     }, [id]);
 
-    if (loading) return (
-        <div className="min-h-screen bg-f1-black flex items-center justify-center text-f1-red">
-            <Loader2 className="animate-spin h-12 w-12" />
-        </div>
-    );
+    if (loading) return <SmartLoader message="Analyzing Team Telemetry..." />;
 
     if (error || !team) return (
         <div className="min-h-screen bg-f1-black p-8 text-f1-offwhite">
