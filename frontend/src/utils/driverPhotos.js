@@ -238,8 +238,30 @@ const driverPhotoMap = {
     'Blokdyk': 'trevor_blokdyk_8bit.png',
     'Blundell': 'mark_blundell_8bit.png',
     'Boesel': 'raul_boesel_8bit.png',
-    // Batch 21 (Partial)
+    // Batch 21
     'Boffa': 'menato_boffa_8bit.png',
+    'Bondurant': 'bob_bondurant_8bit.png',
+    'Bonetto': 'felice_bonetto_8bit.png',
+    'Bonomi': 'roberto_bonomi_8bit.png',
+    'Bordeu': 'juan_manuel_bordeu_8bit.png',
+    'Borgudd': 'slim_borgudd_8bit.png',
+    'Botha': 'luki_botha_8bit.png',
+    'Boullion': 'jean_christophe_boullion_8bit.png',
+    // Batch 22
+    'Bourdais': 'sebastien_bourdais_8bit.png',
+    'Boyd': 'johnny_boyd_8bit.png',
+    'David Brabham': 'david_brabham_8bit.png',
+    'Gary Brabham': 'gary_brabham_8bit.png',
+    'Brack': 'bill_brack_8bit.png',
+    'Brambilla': 'ernesto_brambilla_8bit.png',
+    'Branca': 'toni_branca_8bit.png',
+    'Branca': 'toni_branca_8bit.png',
+    'Brancatelli': 'gianfranco_brancatelli_8bit.png',
+    // Batch 23 (Partial)
+    'Brandon': 'eric_brandon_8bit.png',
+    'Branson': 'don_branson_8bit.png',
+    'Bridger': 'tom_bridger_8bit.png',
+    'Brise': 'tony_brise_8bit.png',
 };
 
 export function getDriverPhoto(surname, forename) {
