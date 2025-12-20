@@ -338,6 +338,26 @@ const driverPhotoMap = {
     'Cross': 'art_cross_8bit.png',
     'Crossley': 'geoff_crossley_8bit.png',
     'Cruz': 'adolfo_cruz_8bit.png',
+    // Batch 32
+    'Daigh': 'chuck_daigh_8bit.png',
+    'Dalmas': 'yannick_dalmas_8bit.png',
+    'Daly': 'derek_daly_8bit.png',
+    'da Matta': 'cristiano_da_matta_8bit.png',
+    "d'Ambrosio": 'jerome_dambrosio_8bit.png',
+    'Danner': 'christian_danner_8bit.png',
+    'Daponte': 'jorge_daponte_8bit.png',
+    'da Silva Ramos': 'hernando_da_silva_ramos_8bit.png',
+    // Batch 33
+    'Davidson': 'anthony_davidson_8bit.png',
+    'Davies': 'jimmy_davies_8bit.png',
+    'Davis': 'colin_davis_8bit.png',
+    'Daywalt': 'jimmy_daywalt_8bit.png',
+    'de Adamich': 'andrea_de_adamich_8bit.png',
+    'de Beaufort': 'carel_godin_de_beaufort_8bit.png',
+    'de Cesaris': 'andrea_de_cesaris_8bit.png',
+    'de Changy': 'alain_de_changy_8bit.png',
+    // Batch 34 (Partial)
+    'de Dryver': 'bernard_de_dryver_8bit.png',
 };
 
 export function getDriverPhoto(surname, forename) {

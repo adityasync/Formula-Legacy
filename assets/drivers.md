@@ -286,23 +286,23 @@ Style: **Face only (no helmet)**, Trading Card, 8-bit.
 | **Art Cross** | 0 | [x] | `assets/art_cross_8bit.png` |
 | **Geoff Crossley** | 0 | [x] | `assets/geoff_crossley_8bit.png` |
 | **Adolfo Cruz** | 0 | [x] | `assets/adolfo_cruz_8bit.png` |
-| **Chuck Daigh** | 0 | [ ] |  |
-| **Yannick Dalmas** | 0 | [ ] |  |
-| **Derek Daly** | 0 | [ ] |  |
-| **Cristiano da Matta** | 0 | [ ] |  |
-| **Jérôme d'Ambrosio** | 0 | [ ] |  |
-| **Christian Danner** | 0 | [ ] |  |
-| **Jorge Daponte** | 0 | [ ] |  |
-| **Hernando da Silva Ramos** | 0 | [ ] |  |
-| **Anthony Davidson** | 0 | [ ] |  |
-| **Jimmy Davies** | 0 | [ ] |  |
-| **Colin Davis** | 0 | [ ] |  |
-| **Jimmy Daywalt** | 0 | [ ] |  |
-| **Andrea de Adamich** | 0 | [ ] |  |
-| **Carel Godin de Beaufort** | 0 | [ ] |  |
-| **Andrea de Cesaris** | 0 | [ ] |  |
-| **Alain de Changy** | 0 | [ ] |  |
-| **Bernard de Dryver** | 0 | [ ] |  |
+| **Chuck Daigh** | 0 | [x] | `assets/chuck_daigh_8bit.png` |
+| **Yannick Dalmas** | 0 | [x] | `assets/yannick_dalmas_8bit.png` |
+| **Derek Daly** | 0 | [x] | `assets/derek_daly_8bit.png` |
+| **Cristiano da Matta** | 0 | [x] | `assets/cristiano_da_matta_8bit.png` |
+| **Jérôme d'Ambrosio** | 0 | [x] | `assets/jerome_dambrosio_8bit.png` |
+| **Christian Danner** | 0 | [x] | `assets/christian_danner_8bit.png` |
+| **Jorge Daponte** | 0 | [x] | `assets/jorge_daponte_8bit.png` |
+| **Hernando da Silva Ramos** | 0 | [x] | `assets/hernando_da_silva_ramos_8bit.png` |
+| **Anthony Davidson** | 0 | [x] | `assets/anthony_davidson_8bit.png` |
+| **Jimmy Davies** | 0 | [x] | `assets/jimmy_davies_8bit.png` |
+| **Colin Davis** | 0 | [x] | `assets/colin_davis_8bit.png` |
+| **Jimmy Daywalt** | 0 | [x] | `assets/jimmy_daywalt_8bit.png` |
+| **Andrea de Adamich** | 0 | [x] | `assets/andrea_de_adamich_8bit.png` |
+| **Carel Godin de Beaufort** | 0 | [x] | `assets/carel_godin_de_beaufort_8bit.png` |
+| **Andrea de Cesaris** | 0 | [x] | `assets/andrea_de_cesaris_8bit.png` |
+| **Alain de Changy** | 0 | [x] | `assets/alain_de_changy_8bit.png` |
+| **Bernard de Dryver** | 0 | [x] | `assets/bernard_de_dryver_8bit.png` |
 | **Maria de Filippis** | 0 | [ ] |  |
 | **Toulo de Graffenried** | 0 | [ ] |  |
 | **Peter de Klerk** | 0 | [ ] |  |
