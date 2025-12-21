@@ -303,22 +303,22 @@ Style: **Face only (no helmet)**, Trading Card, 8-bit.
 | **Andrea de Cesaris** | 0 | [x] | `assets/andrea_de_cesaris_8bit.png` |
 | **Alain de Changy** | 0 | [x] | `assets/alain_de_changy_8bit.png` |
 | **Bernard de Dryver** | 0 | [x] | `assets/bernard_de_dryver_8bit.png` |
-| **Maria de Filippis** | 0 | [ ] |  |
-| **Toulo de Graffenried** | 0 | [ ] |  |
-| **Peter de Klerk** | 0 | [ ] |  |
-| **Pedro de la Rosa** | 0 | [ ] |  |
-| **Jean-Denis Délétraz** | 0 | [ ] |  |
-| **Alfonso de Portago** | 0 | [ ] |  |
-| **Giovanni de Riu** | 0 | [ ] |  |
-| **Max de Terra** | 0 | [ ] |  |
-| **Alessandro de Tomaso** | 0 | [ ] |  |
-| **Charles de Tornaco** | 0 | [ ] |  |
-| **Emilio de Villota** | 0 | [ ] |  |
-| **Ernie de Vos** | 0 | [ ] |  |
-| **Nyck de Vries** | 0 | [ ] |  |
-| **Lucas di Grassi** | 0 | [ ] |  |
-| **Pedro Diniz** | 0 | [ ] |  |
-| **Duke Dinsmore** | 0 | [ ] |  |
+| **Maria de Filippis** | 0 | [x] | `assets/maria_de_filippis_8bit.png` |
+| **Toulo de Graffenried** | 0 | [x] | `assets/toulo_de_graffenried_8bit.png` |
+| **Peter de Klerk** | 0 | [x] | `assets/peter_de_klerk_8bit.png` |
+| **Pedro de la Rosa** | 0 | [x] | `assets/pedro_de_la_rosa_8bit.png` |
+| **Jean-Denis Délétraz** | 0 | [x] | `assets/jean_denis_deletraz_8bit.png` |
+| **Alfonso de Portago** | 0 | [x] | `assets/alfonso_de_portago_8bit.png` |
+| **Giovanni de Riu** | 0 | [x] | `assets/giovanni_de_riu_8bit.png` |
+| **Max de Terra** | 0 | [x] | `assets/max_de_terra_8bit.png` |
+| **Alessandro de Tomaso** | 0 | [x] | `assets/alessandro_de_tomaso_8bit.png` |
+| **Charles de Tornaco** | 0 | [x] | `assets/charles_de_tornaco_8bit.png` |
+| **Emilio de Villota** | 0 | [x] | `assets/emilio_de_villota_8bit.png` |
+| **Ernie de Vos** | 0 | [x] | `assets/ernie_de_vos_8bit.png` |
+| **Nyck de Vries** | 0 | [x] | `assets/nyck_de_vries_8bit.png` |
+| **Lucas di Grassi** | 0 | [x] | `assets/lucas_di_grassi_8bit.png` |
+| **Pedro Diniz** | 0 | [x] | `assets/pedro_diniz_8bit.png` |
+| **Duke Dinsmore** | 0 | [x] | `assets/duke_dinsmore_8bit.png` |
 | **Paul di Resta** | 0 | [ ] |  |
 | **Frank Dochnal** | 0 | [ ] |  |
 | **José Dolhem** | 0 | [ ] |  |

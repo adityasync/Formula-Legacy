@@ -356,8 +356,26 @@ const driverPhotoMap = {
     'de Beaufort': 'carel_godin_de_beaufort_8bit.png',
     'de Cesaris': 'andrea_de_cesaris_8bit.png',
     'de Changy': 'alain_de_changy_8bit.png',
-    // Batch 34 (Partial)
+    // Batch 34
     'de Dryver': 'bernard_de_dryver_8bit.png',
+    'de Filippis': 'maria_de_filippis_8bit.png',
+    'de Graffenried': 'toulo_de_graffenried_8bit.png',
+    'de Klerk': 'peter_de_klerk_8bit.png',
+    'de la Rosa': 'pedro_de_la_rosa_8bit.png',
+    'Délétraz': 'jean_denis_deletraz_8bit.png',
+    'de Portago': 'alfonso_de_portago_8bit.png',
+    'de Riu': 'giovanni_de_riu_8bit.png',
+    // Batch 35
+    'de Terra': 'max_de_terra_8bit.png',
+    'de Tomaso': 'alessandro_de_tomaso_8bit.png',
+    'de Tornaco': 'charles_de_tornaco_8bit.png',
+    'de Villota': 'emilio_de_villota_8bit.png',
+    'de Vos': 'ernie_de_vos_8bit.png',
+    'de Vries': 'nyck_de_vries_8bit.png',
+    'di Grassi': 'lucas_di_grassi_8bit.png',
+    'Diniz': 'pedro_diniz_8bit.png',
+    // Batch 36 (Partial)
+    'Dinsmore': 'duke_dinsmore_8bit.png',
 };
 
 export function getDriverPhoto(surname, forename) {
