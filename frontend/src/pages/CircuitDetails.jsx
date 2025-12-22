@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { getCircuitStats } from '../services/api';
+import CircuitMap from '../components/CircuitMap';
 import { Loader2, ChevronRight, Trophy, MapPin, ArrowLeft, Flag, Timer, Calendar } from 'lucide-react';
 
 export default function CircuitDetails() {
@@ -83,6 +84,63 @@ export default function CircuitDetails() {
 
             {/* Content */}
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
+
+
+                {/* Circuit Map & Analysis */}
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    {/* Map Visualization */}
+                    <div className="lg:col-span-2 bg-gray-900 border border-gray-800 p-6 flex flex-col items-center justify-center relative overflow-hidden min-h-[400px]">
+                        <div className="absolute inset-0 bg-[url('/assets/grid-bg.svg')] opacity-20 pointer-events-none"></div>
+                        <div className="absolute top-0 right-0 w-64 h-64 bg-f1-red/5 rounded-full blur-[80px] pointer-events-none"></div>
+                        <CircuitMap
+                            name={stats.name}
+                            location={stats.location}
+                            country={stats.country}
+                            className="w-full h-full max-h-[350px] z-10"
+                        />
+                        <div className="absolute bottom-4 right-4 text-xs text-gray-600 font-mono">
+                            LAYOUT VISUALIZATION
+                        </div>
+                    </div>
+
+                    {/* Key Analysis Stats */}
+                    <div className="space-y-4">
+                        <div className="bg-gray-900 border border-gray-800 p-6 h-full">
+                            <h2 className="text-xl font-racing text-white mb-6 flex items-center gap-2">
+                                <Trophy className="text-f1-red" /> Circuit Analysis
+                            </h2>
+
+                            <div className="space-y-6">
+                                <div>
+                                    <div className="text-sm text-gray-500 font-mono mb-1">WIN FROM POLE</div>
+                                    <div className="text-4xl font-racing text-white">
+                                        {stats.winFromPolePercentage}%
+                                    </div>
+                                    <div className="w-full bg-gray-800 h-2 rounded-full mt-2 overflow-hidden">
+                                        <div
+                                            className="bg-f1-red h-full rounded-full"
+                                            style={{ width: `${stats.winFromPolePercentage}%` }}
+                                        ></div>
+                                    </div>
+                                    <p className="text-xs text-gray-500 mt-2">
+                                        Percentage of races won by the driver starting in P1.
+                                    </p>
+                                </div>
+
+                                <div className="border-t border-gray-800 pt-6">
+                                    <div className="text-sm text-gray-500 font-mono mb-1">AVG WINNING GRID POS</div>
+                                    <div className="text-4xl font-racing text-cyan-400">
+                                        {stats.avgWinningGridPosition}
+                                    </div>
+                                    <p className="text-xs text-gray-500 mt-2">
+                                        The average starting position of the race winner. Lower is harder to overtake.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 {/* Recent Winners */}
                 <div className="bg-gray-900 border border-gray-800 p-4 sm:p-6">
                     <h2 className="text-xl font-racing text-white mb-4 flex items-center gap-2">
@@ -191,6 +249,6 @@ export default function CircuitDetails() {
                     </div>
                 </div>
             </div>
-        </div>
+        </div >
     );
 }

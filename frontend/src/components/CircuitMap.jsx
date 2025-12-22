@@ -56,9 +56,20 @@ export default function CircuitMap({ circuitId, name, location, country, classNa
         // Let's normalize to 0-100 for simplicity in styling
         const scale = 100 / Math.max(width, height);
 
+        const scaledWidth = width * scale;
+        const scaledHeight = height * scale;
+
+        // Center offsets
+        const dx = (100 - scaledWidth) / 2;
+        const dy = (100 - scaledHeight) / 2;
+
         const pathPoints = coords.map(([x, y]) => {
-            const px = (x - minX) * scale;
-            const py = 100 - (y - minY) * scale; // Flip Y
+            const px = ((x - minX) * scale) + dx;
+            // Flip Y: SVG 0 is top. Max lat (maxY) should be at top (small Y). 
+            // We map y from [minY, maxY] -> [0, scaledHeight]
+            // Then flip: scaledHeight - ((y - minY) * scale)
+            // Then center vertically: + dy
+            const py = (100 - dy) - ((y - minY) * scale);
             return `${px},${py}`;
         }).join(" L ");
 

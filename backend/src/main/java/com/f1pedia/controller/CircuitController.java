@@ -133,6 +133,36 @@ public class CircuitController {
                             """;
               stats.put("recentRaces", jdbcTemplate.queryForList(recentSql, id));
 
+              // Analysis: Win from Pole Percentage
+              String poleWinSql = """
+                            SELECT
+                                CAST(SUM(CASE WHEN r.grid = 1 AND r.position = 1 THEN 1 ELSE 0 END) AS FLOAT) /
+                                NULLIF(COUNT(CASE WHEN r.grid = 1 THEN 1 END), 0) * 100 as win_from_pole
+                            FROM results r
+                            JOIN races ra ON r.race_id = ra.race_id
+                            WHERE ra.circuit_id = ?
+                            """;
+              try {
+                     Double winRate = jdbcTemplate.queryForObject(poleWinSql, Double.class, id);
+                     stats.put("winFromPolePercentage", winRate != null ? Math.round(winRate * 10.0) / 10.0 : 0.0);
+              } catch (Exception e) {
+                     stats.put("winFromPolePercentage", 0.0);
+              }
+
+              // Analysis: Average Winning Grid Position
+              String avgGridSql = """
+                            SELECT AVG(r.grid)
+                            FROM results r
+                            JOIN races ra ON r.race_id = ra.race_id
+                            WHERE ra.circuit_id = ? AND r.position = 1
+                            """;
+              try {
+                     Double avgGrid = jdbcTemplate.queryForObject(avgGridSql, Double.class, id);
+                     stats.put("avgWinningGridPosition", avgGrid != null ? Math.round(avgGrid * 100.0) / 100.0 : 0.0);
+              } catch (Exception e) {
+                     stats.put("avgWinningGridPosition", 0.0);
+              }
+
               return ResponseEntity.ok(stats);
        }
 
