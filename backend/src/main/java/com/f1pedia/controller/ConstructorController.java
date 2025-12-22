@@ -23,6 +23,11 @@ public class ConstructorController {
         return constructorRepository.findAll();
     }
 
+    @GetMapping("/stats")
+    public List<com.f1pedia.dto.ConstructorStatsDTO> getConstructorsWithStats() {
+        return constructorRepository.findAllWithStats();
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<Constructor> getConstructorById(@PathVariable int id) {
         return constructorRepository.findById(id)

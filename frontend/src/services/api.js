@@ -76,6 +76,7 @@ export const getLatestSeason = async () => {
 
 export const getDrivers = () => api.get('/drivers');
 export const getConstructors = (search) => api.get('/constructors', { params: { search } });
+export const getConstructorsWithStats = () => api.get('/constructors/stats');
 export const getConstructorById = (id) => api.get(`/constructors/${id}`);
 export const getConstructorDrivers = (id) => api.get(`/constructors/${id}/drivers`);
 export const getConstructorDriverStats = (id) => api.get(`/constructors/${id}/driver-stats`);
