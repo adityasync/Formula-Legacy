@@ -431,6 +431,21 @@ const driverPhotoMap = {
     'Fohr': 'myron_fohr_8bit.png',
     // Batch 42 (Partial)
     'Foitek': 'gregor_foitek_8bit.png',
+    'Follmer': 'george_follmer_8bit.png',
+    'Fonder': 'george_fonder_8bit.png',
+    'Fontana': 'norberto_fontana_8bit.png',
+    'Fontes': 'azdrubal_fontes_8bit.png',
+    'Forberg': 'carl_forberg_8bit.png',
+    'Force': 'gene_force_8bit.png',
+    'Forini': 'franco_forini_8bit.png',
+    // Batch 43 (Partial)
+    'Fotheringham-Parker': 'philip_fotheringham_parker_8bit.png',
+    'Foyt': 'anthony_foyt_8bit.png',
+    'Franchi': 'carlo_franchi_8bit.png',
+    'Francia': 'giorgio_francia_8bit.png',
+    'Freeland': 'don_freeland_8bit.png',
+    'Frère': 'paul_frere_8bit.png',
+    'Friesacher': 'patrick_friesacher_8bit.png',
 };
 
 export function getDriverPhoto(surname, forename) {
