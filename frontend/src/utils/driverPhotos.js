@@ -446,6 +446,21 @@ const driverPhotoMap = {
     'Freeland': 'don_freeland_8bit.png',
     'Frère': 'paul_frere_8bit.png',
     'Friesacher': 'patrick_friesacher_8bit.png',
+    'Fry': 'joe_fry_8bit.png',
+    // Batch 44
+    'Fushida': 'hiroshi_fushida_8bit.png',
+    'Gabbiani': 'beppe_gabbiani_8bit.png',
+    'Gachot': 'bertrand_gachot_8bit.png',
+    'Gaillard': 'patrick_gaillard_8bit.png',
+    'Galica': 'divina_galica_8bit.png',
+    'Galli': 'nanni_galli_8bit.png',
+    'Gálvez': 'oscar_galvez_8bit.png',
+    'Gamble': 'fred_gamble_8bit.png',
+    // Batch 45 (Partial)
+    'Ganley': 'howden_ganley_8bit.png',
+    'Gardner': 'frank_gardner_8bit.png',
+    'Garrett': 'billy_garrett_8bit.png',
+    'Gartner': 'jo_gartner_8bit.png',
 };
 
 export function getDriverPhoto(surname, forename) {
