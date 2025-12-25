@@ -10,6 +10,7 @@ import DriverProfile from './pages/DriverProfile';
 import Analytics from './pages/Analytics';
 import Circuits from './pages/Circuits';
 import CircuitDetails from './pages/CircuitDetails';
+import RaceDetails from './pages/RaceDetails';
 import Health from './pages/Health';
 
 
@@ -27,6 +28,7 @@ function App() {
           <Route path="/circuits" element={<Circuits />} />
           <Route path="/circuits/:id" element={<CircuitDetails />} />
           <Route path="/races" element={<Races />} />
+          <Route path="/races/:id" element={<RaceDetails />} />
           <Route path="/analytics" element={<Analytics />} />
           <Route path="/health" element={<Health />} />
         </Routes>

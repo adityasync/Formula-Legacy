@@ -10,6 +10,8 @@ import java.util.List;
 @Repository
 public interface QualifyingRepository extends JpaRepository<Qualifying, Integer> {
 
+    List<Qualifying> findByRaceRaceIdOrderByPositionAsc(Integer raceId);
+
     @Query(value = "SELECT r.name as race_name, q.position as quali_pos, res.position as race_pos, " +
             "(q.position - res.position) as delta " +
             "FROM qualifying q " +

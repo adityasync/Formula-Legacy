@@ -144,14 +144,14 @@ export default function Races() {
 
                 {filteredRaces.length > 0 ? (
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-                        <AnimatePresence mode='wait'>
+                        <AnimatePresence>
                             {filteredRaces.map((race, i) => (
                                 <motion.div
                                     key={race.raceId}
                                     initial={{ opacity: 0, scale: 0.9, y: 20 }}
                                     animate={{ opacity: 1, scale: 1, y: 0 }}
                                     transition={{ duration: 0.4, delay: i < 8 ? i * 0.05 : 0 }}
-                                    className="h-[280px]" // Fixed height for consistent grid
+                                    className="h-[280px] relative" // Fixed height for consistent grid
                                 >
                                     <RaceCard race={race} />
                                 </motion.div>

@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams, Link } from 'react-router-dom';
 import { getConstructorById, getConstructorDriverStats, getConstructorSeasons, getConstructorCircuits, getConstructorDashboardStats, getConstructorStatusBreakdown, getConstructorPointsHeatmap, getConstructorGeoPerformance } from '../services/api';
 import { Trophy, ArrowLeft, Globe, Flag, Calendar } from 'lucide-react';
 import { getDriverPhotoOrPlaceholder } from '../utils/driverPhotos';

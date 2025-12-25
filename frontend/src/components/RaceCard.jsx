@@ -1,4 +1,5 @@
 import { useRef } from 'react';
+import { Link } from 'react-router-dom';
 import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
 import { MapPin, Calendar, Clock, ChevronRight } from 'lucide-react';
 import { getFlagUrl } from '../utils/countryUtils';
@@ -53,10 +54,8 @@ export default function RaceCard({ race }) {
             transition={{ type: "spring", stiffness: 400, damping: 20 }}
             className="group relative h-full perspective-1000 cursor-pointer"
         >
-            <a
-                href={race.url}
-                target="_blank"
-                rel="noreferrer"
+            <Link
+                to={`/races/${race.raceId}`}
                 className="block h-full relative bg-[#111] rounded-2xl overflow-hidden transform-gpu transition-shadow duration-300"
                 style={{
                     boxShadow: '0 0 0 1px rgba(255,255,255,0.05)'
@@ -135,7 +134,7 @@ export default function RaceCard({ race }) {
                         </div>
                     </div>
                 </div>
-            </a>
+            </Link>
         </motion.div>
     );
 }

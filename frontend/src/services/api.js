@@ -78,6 +78,11 @@ export const getRaces = (year) => {
     if (year) return api.get(`/races/season/${year}`);
     return api.get('/races');
 };
+export const getRace = (id) => api.get(`/races/${id}`);
+export const getRaceResults = (id) => api.get(`/races/${id}/results`);
+export const getRaceLapTimes = (id) => api.get(`/races/${id}/lap-times`);
+export const getRacePitStops = (id) => api.get(`/races/${id}/pit-stops`);
+export const getRaceQualifying = (id) => api.get(`/races/${id}/qualifying`);
 
 // Analytics & Insights
 export const getDNFCauses = () => api.get('/analytics/dnf-causes');
