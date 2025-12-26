@@ -417,17 +417,18 @@ Style: **Face only (no helmet)**, Trading Card, 8-bit.
 | **Keith Greene** | 0 | [x] | `assets/keith_greene_8bit.png` |
 | **Masten Gregory** | 0 | [x] | `assets/masten_gregory_8bit.png` |
 | **Cliff Griffith** | 0 | [x] | `assets/cliff_griffith_8bit.png` |
-| **Georges Grignard** | 0 | [ ] |  |
-| **Bobby Grim** | 0 | [ ] |  |
-| **Romain Grosjean** | 0 | [ ] |  |
-| **Olivier Grouillard** | 0 | [ ] |  |
-| **Brian Gubby** | 0 | [ ] |  |
-| **André Guelfi** | 0 | [ ] |  |
-| **Miguel Ángel Guerra** | 0 | [ ] |  |
-| **Roberto Guerrero** | 0 | [ ] |  |
-| **Maurício Gugelmin** | 0 | [ ] |  |
-| **Esteban Gutiérrez** | 0 | [ ] |  |
-| **Hubert Hahne** | 0 | [ ] |  |
+| **Georges Grignard** | 0 | [x] | `assets/georges_grignard_8bit.png` |
+| **Bobby Grim** | 0 | [x] | `assets/bobby_grim_8bit.png` |
+| **Romain Grosjean** | 0 | [x] | `assets/romain_grosjean_8bit.png` |
+| **Olivier Grouillard** | 0 | [x] | `assets/olivier_grouillard_8bit.png` |
+| **Brian Gubby** | 0 | [x] | `assets/brian_gubby_8bit.png` |
+| **André Guelfi** | 0 | [x] | `assets/andre_guelfi_8bit.png` |
+| **Miguel Ángel Guerra** | 0 | [x] | `assets/miguel_angel_guerra_8bit.png` |
+| **Roberto Guerrero** | 0 | [x] | `assets/roberto_guerrero_8bit.png` |
+| **Maurício Gugelmin** | 0 | [x] | `assets/mauricio_gugelmin_8bit.png` |
+| **Dan Gurney** | 0 | [x] | `assets/dan_gurney_8bit.png` |
+| **Esteban Gutiérrez** | 0 | [x] | `assets/esteban_gutierrez_8bit.png` |
+| **Hubert Hahne** | 0 | [x] | `assets/hubert_hahne_8bit.png` |
 | **Mike Hailwood** | 0 | [ ] |  |
 | **Bruce Halford** | 0 | [ ] |  |
 | **Jim Hall** | 0 | [ ] |  |

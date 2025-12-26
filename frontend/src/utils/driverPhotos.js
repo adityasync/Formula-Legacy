@@ -488,6 +488,20 @@ const driverPhotoMap = {
     'Greene': 'keith_greene_8bit.png',
     'Gregory': 'masten_gregory_8bit.png',
     'Griffith': 'cliff_griffith_8bit.png',
+    'Grignard': 'georges_grignard_8bit.png',
+    'Grim': 'bobby_grim_8bit.png',
+    'Grosjean': 'romain_grosjean_8bit.png',
+    // Batch 49
+    'Grouillard': 'olivier_grouillard_8bit.png',
+    'Gubby': 'brian_gubby_8bit.png',
+    'Guelfi': 'andre_guelfi_8bit.png',
+    'Guerra': 'miguel_angel_guerra_8bit.png',
+    'Guerrero': 'roberto_guerrero_8bit.png',
+    'Gugelmin': 'mauricio_gugelmin_8bit.png',
+    'Gurney': 'dan_gurney_8bit.png',
+    'Gutiérrez': 'esteban_gutierrez_8bit.png',
+    // Batch 50
+    'Hahne': 'hubert_hahne_8bit.png',
 };
 
 /**
